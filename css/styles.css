@@ -1,0 +1,26 @@
+div.row img.thumb {
+
+	width: 100%;	
+}
+
+div.thumb-cell {
+	width: 16%;	
+	float: left;
+	height: 100px;
+	overflow: hidden;
+	padding: 0.3333334%;
+	margin: 0.333334%;
+}
+
+div.thumb-cell img.thumb {
+	height: 100%;
+	width: 100%;	
+}
+
+ul.pagination {
+	width: 100%;	
+}
+
+video {
+	max-width: 1000px;	
+}
