@@ -7,33 +7,35 @@ class View {
 	}
 
 	public function header() {
-		$html[] = '<!DOCTYPE html>';
-		$html[] = '<html><head>';
-		$html[] = '<meta name="viewport" content="width=device-width,initial-scale=1.0">';
-		$html[] = '<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />';
-		$html[] = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />';
+		
+		$content = new Content();
+		$content->add( '<!DOCTYPE html>');
+		$content->add( '<html><head>');
+		$content->add( '<meta name="viewport" content="width=device-width,initial-scale=1.0">');
+		$content->add( '<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
+		$content->add( '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
 
-		$html[] = '<link rel="stylesheet" href="./css/styles.css" />';
-		$html[] = '<link rel="stylesheet" href="./css/jquery.fancybox.css" />';
-		$html[] = '</head>';
-		$html[] = '<body>';
-		$html[] = '<div class="container">';
+		$content->add( '<link rel="stylesheet" href="./css/styles.css" />');
+		$content->add( '<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
+		$content->add( '</head>');
+		$content->add( '<body>');
+		$content->add( '<div class="container">');
 
-		return implode("\n", $html);
+		return $content;
 	}
 
 	public function footer() {
-		$html[] = '</div>';
+		$content->add( '</div>');
 
-		$html[] = '<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>';
-		$html[] = '<script src="./js/jquery.fancybox.js"></script>';
+		$content->add( '<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>');
+		$content->add( '<script src="./js/jquery.fancybox.js"></script>');
 
-		$html[] = '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>';
-		$html[] = '<script src="./js/site.js"></script>';
+		$content->add( '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>');
+		$content->add( '<script src="./js/site.js"></script>');
 
-		$html[] = '</body>';
-		$html[] = '</html>';
-		return implode("\n", $html);
+		$content->add( '</body>');
+		$content->add( '</html>');
+		return $content;
 	}
 
 }
