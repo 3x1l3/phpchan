@@ -19,7 +19,8 @@ class View {
 		$content->add( '<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
 		$content->add( '</head>');
 		$content->add( '<body>');
-		$content->add( '<div class="container">');
+$content->add('<h1>PHPChan</h1>');
+		$content->add( '<div class="container-fluid">');
 
 		return $content;
 	}

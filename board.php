@@ -18,14 +18,13 @@ $thumbs = $controller -> getThumbnails($json);
 // print_r($array);
 // echo '</pre>';
 
-echo '<div class="container-fluid">';
 foreach ($array->threads as $thread) {
 
 	$first = $thread -> posts[0];
 
 	if ($first -> closed != 1) {
 
-		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm row">';
+		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm row board">';
 		echo '<div class="col-md-2 col-sm-2 col-xs-2"><img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" /></div>';
 		echo '<div class="col-md-10 col-sm-10 col-xs-10"><h3>' . $first -> sub . '</h3>';
 		echo '<p>' . $first -> com . '</p>';
@@ -57,4 +56,3 @@ echo ' <li>
     </li>
   </ul>
 </nav>';
-echo '</div>';

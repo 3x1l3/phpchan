@@ -1,6 +1,13 @@
+
+div.container-fluid {
+	margin: 50px 0;
+}
+div.row {
+	
+}
 div.row img.thumb {
 
-	height: 100%;	
+	width: 100%;	
 }
 
 div.thumb-cell {
