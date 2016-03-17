@@ -1,4 +1,5 @@
 <?php
+use phpFastCache\CacheManager;
 
 class Controller
 {
@@ -25,11 +26,6 @@ class Controller
     public function get($url)
     {
 
-        // $cache = new phpFastCache();
-        //
-        // $response = $cache->get($url);
-        // $response = null;
-
         if ($this->curlEnabled()) {
             if ($response == null) {
                 $ch = curl_init();
@@ -51,14 +47,26 @@ class Controller
         return function_exists('curl_version');
     }
 
-    private function buildURL()
+    private function buildURL($page = null)
     {
-        return 'http://a.4cdn.org/'.$this->board.'/'.$this->page.'.json';
+        if ($page === null)
+          $page = $this->page;
+
+        return 'http://a.4cdn.org/'.$this->board.'/'.$page.'.json';
     }
 
     public function exec()
     {
         return $this->get($this->buildURL());
+    }
+
+    public function multiEx()
+    {
+        $cache = new phpFastCache();
+        
+        for ($i = 1; $i<=10; $i++) {
+          $this->get($this->buildURL($i));
+        }
     }
 
     public function genThumnailURL($tim)
