@@ -26,6 +26,8 @@ class Controller
     public function get($url)
     {
 
+		$cache = new phpFastCache();
+
         if ($this->curlEnabled()) {
             if ($response == null) {
                 $ch = curl_init();
@@ -62,11 +64,16 @@ class Controller
 
     public function multiEx()
     {
-        $cache = new phpFastCache();
-        
+        $cache = CacheManager::Files();
+        $result = array();
         for ($i = 1; $i<=10; $i++) {
-          $this->get($this->buildURL($i));
+          $result[$i] = $cache->get($this->board."-".$i);
+          if ($result[$i] === null) {
+          	$result[$i] = $this->get($this->buildURL($i));
+			$cache->set($this->board.'-'.$i);
+		  }
         }
+		return $result[$this->page];
     }
 
     public function genThumnailURL($tim)

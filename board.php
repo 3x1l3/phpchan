@@ -10,7 +10,7 @@ if (!isset($_GET['p']))
 	$_GET['p'] = 1;
 
 
-$json = $controller -> exec();
+$json = $controller -> multiEx();
 $array = json_decode($json);
 $thumbs = $controller -> getThumbnails($json);
 
