@@ -17,7 +17,6 @@ $thumbs = $controller -> getThumbnails($json);
 // echo '<pre>';
 // print_r($array);
 // echo '</pre>';
-
 foreach ($array->threads as $thread) {
 
 	$first = $thread -> posts[0];
