@@ -1,4 +1,5 @@
 <?php
+use phpFastCache\CacheManager;
 
 class Controller
 {
@@ -63,7 +64,9 @@ class Controller
 
     public function multiEx()
     {
-        $cache = new phpFastCache();
+      
+        $cache = CacheManager::Memcached();
+
         $result = array();
         for ($i = 1; $i<=10; $i++) {
           $result[$i] = $cache->get($this->board."-".$i);
