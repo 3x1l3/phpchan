@@ -8,8 +8,8 @@ class Controller
 
     private $hash;
 
-    private $thumbnail_endpoint = 'http://t.4cdn.org/[board]/[tim]s.jpg ';
-    private $image_endpoint = 'http://i.4cdn.org/[board]/[tim][ext]';
+    private $thumbnail_endpoint = 'image.php?board=[board]&tim=[tim]&type=thumb';
+    private $image_endpoint = 'image.php?board=[board]&tim=[tim]&ext=[ext]&type=full';
 
     public function __construct()
     {
@@ -25,8 +25,6 @@ class Controller
 
     public function get($url)
     {
-
-		$cache = new phpFastCache();
 
         if ($this->curlEnabled()) {
             if ($response == null) {
@@ -64,18 +62,17 @@ class Controller
 
     public function multiEx()
     {
-      
-        $cache = CacheManager::Memcached();
+
+        $cache = CacheManager::Files();
 
         $result = array();
         for ($i = 1; $i<=10; $i++) {
           $result[$i] = $cache->get($this->board."-".$i);
-          if ($result[$i] === null) {
+          if ($result[$i] === null || $_GET['resetcache'] == 1 ) {
           	$result[$i] = $this->get($this->buildURL($i));
-			$cache->set($this->board.'-'.$i);
+			$cache->set($this->board.'-'.$i, $result[$i], 600);
 		  }
         }
-		var_dump($result);
 		return $result[$this->page];
     }
 
@@ -91,6 +88,7 @@ class Controller
     public function genImageUrl($post)
     {
         $tmp = $this->image_endpoint;
+        $post->ext = preg_replace("/[^a-z]/","", $post->ext, -1);
         $tmp = str_replace('[board]', $this->board, $tmp);
         $tmp = str_replace('[tim]', $post->tim, $tmp);
         $tmp = str_replace('[ext]', $post->ext, $tmp);

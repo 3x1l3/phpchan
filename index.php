@@ -18,3 +18,4 @@ $boards->add('</ul>');
 
 echo $view->header();
 echo $boards;
+var_dump('test');
