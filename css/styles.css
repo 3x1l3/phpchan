@@ -3,15 +3,15 @@ div.container-fluid {
 	margin: 50px 0;
 }
 div.row {
-	
+
 }
 div.row img.thumb {
 
-	width: 100%;	
+	width: 100%;
 }
 
 div.thumb-cell {
-	width: 19%;	
+	width: 19%;
 	float: left;
 	height: 200px;
 	overflow: hidden;
@@ -20,13 +20,49 @@ div.thumb-cell {
 }
 
 div.thumb-cell img.thumb {
-	width: 100%;	
+	width: 100%;
 }
 
 ul.pagination {
-	width: 100%;	
+	width: 100%;
 }
 
 video {
-	max-width: 1000px;	
+	max-width: 1000px;
+}
+
+
+.modal-dialog {
+	max-width: 95%;
+	min-width: 100px;
+}
+
+#popup .modal-content i.fullscreen-icon {
+
+	position: absolute;
+	left: calc(50% - 50px);
+	top: calc(50% - 50px);
+	font-size: 100px;
+
+}
+
+#popup .modal-body img.fade:hover {
+	transition: 0.5s;
+	opacity: 0.1;
+}
+
+
+#popup .modal-body img {
+		max-width: 100%;
+		min-width: auto;
+		margin: 0 auto;
+		display: block;
+opacity:1;
+
+
+
+}
+.popup-trigger {
+	cursor: pointer;
+
 }
