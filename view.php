@@ -89,7 +89,7 @@ class View
         if ($boards !== null) {
             foreach ($boards as $board) {
                 if ($board->board == $_GET['b']) {
-                    $Out .= '<i class="fa fa-angle-double-right"></i> '.$board->title.'';
+                    $Out .= '<i class="fa fa-angle-double-right"></i> <a href="board.php?b='.$_GET['b'].'">'.$board->title.'</a>';
                 }
             }
         }
