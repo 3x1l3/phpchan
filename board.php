@@ -1,6 +1,9 @@
 <?php
+use phpFastCache\CacheManager;
+
 require_once("config.php");
 
+$cache = CacheManager::Files();
 $controller = new Controller();
 $view = new View();
 
@@ -13,6 +16,16 @@ if (!isset($_GET['p']))
 $json = $controller -> multiEx();
 $array = json_decode($json);
 $thumbs = $controller -> getThumbnails($json);
+
+$boards = $cache->get('boards');
+
+foreach(json_decode($boards)->boards as $board) {
+
+	if ($board->board == $_GET['b'])
+		echo '<h2>'.$board->title.'</h2>';
+
+}
+//var_dump(json_decode($boards));
 
 // echo '<pre>';
 // print_r($array);

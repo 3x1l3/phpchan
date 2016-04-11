@@ -1,11 +1,22 @@
 <?php
+use phpFastCache\CacheManager;
 
 require_once 'config.php';
 
 $controller = new Controller();
 $view = new View();
 
-$array = json_decode($controller->get('http://a.4cdn.org/boards.json'));
+
+$cache = CacheManager::Files();
+$boardsJSON = $cache->get('boards');
+
+if ($boardsJSON !== null) {
+  $boardsJSON = $controller->get('http://a.4cdn.org/boards.json');
+  $array = json_decode($boardsJSON);
+  $cache->set('boards',json_encode($array), 3600*24);
+}
+$array = json_decode($boardsJSON);
+
 
 $boards = new Content();
 
