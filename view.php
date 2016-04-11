@@ -7,7 +7,7 @@ class View {
 	}
 
 	public function header() {
-		
+
 		$content = new Content();
 		$content->add( '<!DOCTYPE html>');
 		$content->add( '<html><head><title>PHPChan</title>');
@@ -24,6 +24,45 @@ $content->add('<h1>PHPChan</h1>');
 
 		return $content;
 	}
+	public function modal() {
+		return '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
+		  <div class="modal-dialog" role="document">
+
+		    <div class="modal-content">
+				<i class="fa fa-arrows-alt fullscreen-icon fadeout"></i>
+		      <div class="modal-body">
+
+		      </div>
+
+		    </div>
+		  </div>
+		</div>';
+	}
+
+	public function pagination($p, $b) {
+		echo '<nav>
+		  <ul class="pagination pagination-lg">
+		    <li>
+		      <a href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>';
+		for ($i = 1; $i <= 10; $i++) {
+
+			if ($p == $i)
+				echo '<li class="active"><a href="board.php?b='.$b.'&p='.$i.'">' . $i . '</a></li>';
+			else
+				echo '<li><a href="board.php?b='.$b.'&p='.$i.'">' . $i . '</a>';
+
+		}
+		echo ' <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>';
+	}
 
 	public function footer() {
 		$content = new Content();
@@ -38,6 +77,28 @@ $content->add('<h1>PHPChan</h1>');
 		$content->add( '</body>');
 		$content->add( '</html>');
 		return $content;
+	}
+
+	public function drawBreadcrumb(array $boards = null, array $threads = null) {
+		$Out = '<h2>';
+			$Out .= '<a href=".">Boards</a>';
+			if ($boards !== null) {
+		foreach(json_decode($boards)->boards as $board) {
+
+			if ($board->board == $_GET['b'])
+				$Out = '<i class="fa fa-angle-double-right"></i> '.$board->title.'';
+
+		}
+	}
+
+		if (isset($_GET['t'])) {
+
+		}
+
+		$Out .= '</h2>';
+
+		return $Out;
+
 	}
 
 }

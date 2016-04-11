@@ -28,6 +28,8 @@ $count = 0;
 $gif = new Content();
 $webm = new Content();
 
+var_dump($thread);
+
 foreach ($thread->posts as $post) {
 	if ($post->filename) {
 		if ($post->ext != '.webm') {
@@ -55,16 +57,5 @@ echo '<div>'.$webm.'</div>';
 echo '<h3>Other</h3>';
 echo '<div>'.$gif;
 echo '</div>';
-echo '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
-  <div class="modal-dialog" role="document">
-
-    <div class="modal-content">
-		<i class="fa fa-arrows-alt fullscreen-icon fadeout"></i>
-      <div class="modal-body">
-
-      </div>
-
-    </div>
-  </div>
-</div>';
+echo $view->modal();
 echo $view->footer();

@@ -22,14 +22,11 @@ $boards = $cache->get('boards');
 foreach(json_decode($boards)->boards as $board) {
 
 	if ($board->board == $_GET['b'])
-		echo '<h2>'.$board->title.'</h2>';
+		echo '<h2><a href=".">Boards</a> <i class="fa fa-angle-double-right"></i> '.$board->title.'</h2>';
 
 }
-//var_dump(json_decode($boards));
+echo $view->pagination($_GET['p'],$_GET['b']);
 
-// echo '<pre>';
-// print_r($array);
-// echo '</pre>';
 foreach ($array->threads as $thread) {
 
 	$first = $thread -> posts[0];
@@ -46,25 +43,4 @@ foreach ($array->threads as $thread) {
 }
 
 
-echo '<nav>
-  <ul class="pagination pagination-lg">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>';
-for ($i = 1; $i <= 10; $i++) {
-
-	if ($_GET['p'] == $i)
-		echo '<li class="active"><a href="board.php?b='.$_GET['b'].'&p='.$i.'">' . $i . '</a></li>';
-	else
-		echo '<li><a href="board.php?b='.$_GET['b'].'&p='.$i.'">' . $i . '</a>';
-
-}
-echo ' <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>';
+echo $view->pagination($_GET['p'],$_GET['b']);
