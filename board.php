@@ -19,12 +19,7 @@ $thumbs = $controller -> getThumbnails($json);
 
 $boards = $cache->get('boards');
 
-foreach(json_decode($boards)->boards as $board) {
-
-	if ($board->board == $_GET['b'])
-		echo '<h2><a href=".">Boards</a> <i class="fa fa-angle-double-right"></i> '.$board->title.'</h2>';
-
-}
+echo $view->drawBreadcrumb(json_decode($boards)->boards);
 echo $view->pagination($_GET['p'],$_GET['b']);
 
 foreach ($array->threads as $thread) {

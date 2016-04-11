@@ -28,7 +28,9 @@ $count = 0;
 $gif = new Content();
 $webm = new Content();
 
-var_dump($thread);
+$boards = $cache->get('boards');
+
+echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
 foreach ($thread->posts as $post) {
 	if ($post->filename) {
