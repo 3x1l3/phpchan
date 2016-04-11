@@ -1,4 +1,5 @@
 <?php
+
 use phpFastCache\CacheManager;
 
 class Controller
@@ -25,19 +26,7 @@ class Controller
 
     public function get($url)
     {
-
-        if ($this->curlEnabled()) {
-            if ($response == null) {
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $response = curl_exec($ch);
-                curl_close($ch);
-                $cache->set($url, $response, 600);
-            }
-        } else {
-            $response = file_get_contents($url);
-        }
+        $response = file_get_contents($url);
 
         return $response;
     }
@@ -49,8 +38,9 @@ class Controller
 
     private function buildURL($page = null)
     {
-        if ($page === null)
-          $page = $this->page;
+        if ($page === null) {
+            $page = $this->page;
+        }
 
         return 'http://a.4cdn.org/'.$this->board.'/'.$page.'.json';
     }
@@ -62,18 +52,18 @@ class Controller
 
     public function multiEx()
     {
-
         $cache = CacheManager::Files();
 
         $result = array();
-        for ($i = 1; $i<=10; $i++) {
-          $result[$i] = $cache->get($this->board."-".$i);
-          if ($result[$i] === null || $_GET['resetcache'] == 1 ) {
-          	$result[$i] = $this->get($this->buildURL($i));
-			$cache->set($this->board.'-'.$i, $result[$i], 600);
-		  }
+        for ($i = 1; $i <= 10; ++$i) {
+            $result[$i] = $cache->get($this->board.'-'.$i);
+            if ($result[$i] === null || $_GET['resetcache'] == 1) {
+                $result[$i] = $this->get($this->buildURL($i));
+                $cache->set($this->board.'-'.$i, $result[$i], 600);
+            }
         }
-		return $result[$this->page];
+
+        return $result[$this->page];
     }
 
     public function genThumnailURL($tim)
@@ -88,7 +78,7 @@ class Controller
     public function genImageUrl($post)
     {
         $tmp = $this->image_endpoint;
-        $post->ext = preg_replace("/[^a-z]/","", $post->ext, -1);
+        $post->ext = preg_replace('/[^a-z]/', '', $post->ext, -1);
         $tmp = str_replace('[board]', $this->board, $tmp);
         $tmp = str_replace('[tim]', $post->tim, $tmp);
         $tmp = str_replace('[ext]', $post->ext, $tmp);
