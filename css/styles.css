@@ -62,6 +62,10 @@ opacity:1;
 
 
 }
+#popup .modal-body video {
+max-width: 100%;
+
+}
 .popup-trigger {
 	cursor: pointer;
 

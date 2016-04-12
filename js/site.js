@@ -32,9 +32,12 @@ $(document).ready(function() {
 		}
 	} else {
 $('#popup i.fullscreen-icon').hide();
-		$('#popup .modal-body').html('<video src="' + href + '" controls></video>');
-		$('#popup').modal('show');
 
+		var video = $('<video src="' + href + '" controls></video>');
+
+			$('#popup .modal-body').html(video);
+			$('#popup').modal('show');
+		//	$('#popup .modal-dialog').width();
 
 	}
 

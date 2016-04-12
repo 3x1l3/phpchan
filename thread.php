@@ -44,7 +44,7 @@ foreach ($thread->posts as $post) {
 			$id = md5($post->filename);
 
 			$webm->Add('<div class="thumb-cell well well-sm">');
-			$webm->Add('<a class="popup-trigger" data-type="video"  data-img="' . $controller->genImageUrl($post) . '"><img class="thumb" src="' . $controller->genThumnailURL($post->tim) . '" /></a>');
+			$webm->Add('<a class="popup-trigger" data-type="video" data-height="'.$post->h.'" data-width="'.$post->w.'"  data-img="' . $controller->genImageUrl($post) . '"><img class="thumb" src="' . $controller->genThumnailURL($post->tim) . '" /></a>');
 		//	$webm->Add('<div style="display: none"><div id="'.$id.'"><video src="' . $controller->genImageUrl($post) . '" controls></video></div></div>');
 			$webm->Add('</div>');
 		}
