@@ -36,7 +36,10 @@ video {
 	max-width: 95%;
 	min-width: 100px;
 }
+#popup .modal-content {
+text-align:center;
 
+}
 #popup .modal-content i.fullscreen-icon {
 
 	position: absolute;

@@ -33,11 +33,26 @@ $(document).ready(function() {
 	} else {
 $('#popup i.fullscreen-icon').hide();
 
-		var video = $('<video src="' + href + '" controls></video>');
+		var video = $('<video src="' + href + '" controls style="display: none;"></video>'+'<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>');
 
 			$('#popup .modal-body').html(video);
 			$('#popup').modal('show');
 		//	$('#popup .modal-dialog').width();
+		$('#popup .modal-body video').on('canplaythrough',function(){
+
+			$(this).attr('style','');
+			$('#popup').find('.fa-spinner').remove();
+
+		});
+
+
+$('#popup video').bind("progress",function(e){
+	console.log(e);
+	var percentComplete = e.loaded/e.total;
+        console.log(e.total + ' ' + e.loaded + ' ' + e.lengthComputable );
+					$('#popup .progress .progress-bar').width(percentComplete+'%')
+    });
+
 
 	}
 
