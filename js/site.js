@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
-	$('a.webm').fancybox({
-		'hideOnContentClick': true
-	}).on('onComplete',function() {
-
-		});
 
 //	$('a.image').fancybox();
 
@@ -14,6 +9,11 @@ $(document).ready(function() {
 
 		var href = $(this).data('img');
 		var width = $(this).data('width');
+		var type = $(this).data('type');
+
+
+		if (type == 'image') {
+			$('#popup i.fullscreen-icon').show();
 
 		if (width > $('#popup .modal-dialog').width()) {
 			var img = $('<a href="'+href+'" target="_blank"><img class="fade" src="'+ href  +'" /></a>');
@@ -30,6 +30,13 @@ $(document).ready(function() {
 			});
 
 		}
+	} else {
+$('#popup i.fullscreen-icon').hide();
+		$('#popup .modal-body').html('<video src="' + href + '" controls></video>');
+		$('#popup').modal('show');
+
+
+	}
 
 
 

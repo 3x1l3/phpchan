@@ -28,8 +28,7 @@ if (isset($board) && isset($tim)) {
       $cache->set($query, $data, 3600*24);
     }
 
-    header('Content-type:image/jpg');
-    echo $data;
+    $ctype = 'jpg';
 
   } else {
     $query = $board.'/'.$tim.'.'.$ext;
@@ -45,14 +44,17 @@ if (isset($board) && isset($tim)) {
         case "png": $ctype="image/png"; break;
         case "jpeg":
         case "jpg": $ctype="image/jpeg"; break;
+        case 'webm': $ctype="video/webm"; break;
         default:
     }
 
-      header('Content-type: ' . $ctype);
       echo($data);
 
   }
 
+  header('Content-type: ' . $ctype);
+  echo $data;
+exit();
 }
 
 

@@ -30,7 +30,7 @@ class View
 		  <div class="modal-dialog" role="document">
 
 		    <div class="modal-content">
-				<i class="fa fa-arrows-alt fullscreen-icon fadeout"></i>
+				<i class="fa fa-arrows-alt fullscreen-icon"></i>
 		      <div class="modal-body">
 
 		      </div>
