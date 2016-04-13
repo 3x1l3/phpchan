@@ -50,7 +50,7 @@ $(document).ready(function() {
         });
 
     $('#popup').on('hide.bs.modal', function() {
-        $('#popup video').remove();
+        $('#popup video').stop();
     });
 
 

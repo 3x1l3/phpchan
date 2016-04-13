@@ -1,4 +1,5 @@
 <?php
+session_start();
 use phpFastCache\CacheManager;
 
 require_once ("config.php");
@@ -48,9 +49,10 @@ if (isset($board) && isset($tim)) {
         default:
     }
 
-      echo($data);
 
   }
+
+
 
   header('Content-type: ' . $ctype);
   echo $data;

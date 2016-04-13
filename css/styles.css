@@ -27,6 +27,16 @@ ul.pagination {
 	width: 100%;
 }
 
+
+table.boards td a {
+	width: 100%;
+display:block;
+padding: 3px;
+}
+table.boards td {
+		padding: 0;
+}
+
 video {
 	max-width: 1000px;
 }
