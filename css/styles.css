@@ -49,6 +49,11 @@ text-align:center;
 
 }
 
+#popup i.loading {
+font-size: 100px;
+
+}
+
 #popup .modal-body img.fade:hover {
 	transition: 0.5s;
 	opacity: 0.1;
