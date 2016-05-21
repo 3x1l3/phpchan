@@ -17,8 +17,12 @@ $cache = CacheManager::files();
 
 $thread = $cache->get($_GET['t']);
 
+$tmp = $thread;
+
+
 if ($thread === null) {
 	$thread = json_decode($controller->get($url));
+
 	$cache->set($_GET['t'], $thread, 600);
 }
 
@@ -31,6 +35,7 @@ $webm = new Content();
 $boards = $cache->get('boards');
 
 echo $view->drawBreadcrumb(json_decode($boards)->boards);
+
 
 foreach ($thread->posts as $post) {
 	if ($post->filename) {

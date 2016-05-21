@@ -1,7 +1,5 @@
 <?php
 
-use phpFastCache\CacheManager;
-
 require_once 'config.php';
 
 $controller = new Controller();
@@ -10,7 +8,7 @@ $view = new View();
 $cache = CacheManager::Files();
 $boardsJSON = $cache->get('boards');
 
-if ($boardsJSON === null) {
+if ($boardsJSON === null || $_GET['nocache'] == 1) {
     $boardsJSON = $controller->get('http://a.4cdn.org/boards.json');
     $cache->set('boards', $boardsJSON, 3600 * 24);
 }
