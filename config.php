@@ -4,7 +4,7 @@ if ($_GET['debug'] == 1)
     error_reporting(E_ALL & ~E_NOTICE);
 
 require_once('vendor/autoload.php');
-require_once('library/content.php');
+
 
 if ($_GET['debug'] == 1)
     error_reporting(E_ALL & ~E_NOTICE);

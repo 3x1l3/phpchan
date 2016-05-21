@@ -8,7 +8,7 @@ class View
 
     public function header()
     {
-        $content = new Content();
+        $content = new \Content();
         $content->add('<!DOCTYPE html>');
         $content->add('<html><head><title>PHPChan</title>');
         $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');

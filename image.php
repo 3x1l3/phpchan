@@ -1,8 +1,10 @@
 <?php
-session_start();
-use phpFastCache\CacheManager;
 
-require_once ("config.php");
+session_start();
+require_once 'config.php';
+use phpFastCache\CacheManager;
+use ImageSource\ImageSource;
+use ImageSource\ThumbnailSource;
 
 //error_reporting(E_ALL);
 
@@ -13,53 +15,38 @@ $board = $_GET['board'];
 $tim = $_GET['tim'];
 $ext = $_GET['ext'];
 
-
-
-$type = isset($_GET['type'])?$_GET['type']:null; //::Thumb or full
+$type = isset($_GET['type']) ? $_GET['type'] : null; //::Thumb or full
 
 if (isset($board) && isset($tim)) {
-  $cache = CacheManager::Files();
+    $cache = CacheManager::Files();
 
-  if ($type == 'thumb' || is_null($type)) {
-    $query = $board.'/'.$tim.'s.jpg';
-    $data = $cache->get($query);
+    if ($type == 'thumb' || is_null($type)) {
+        $thumb = new ThumbnailSource($tim, $board);
+        $data = $cache->get($thumb->getQuery());
 
-    if ($data === null) {
-      $data = file_get_contents($thumbnail_endpoint.$query);
-      $cache->set($query, $data, 3600*24);
-    }
+        if ($data === null) {
+            $cache->set($thumb->getQuery(), $thumb->getData(), 3600 * 24);
+        }
 
-    $ctype = 'jpg';
+        $ext = 'jpg';
+    } else {
+        $image = new ImageSource($tim, $board, $ext);
+        $data = $cache->get($image->getQuery());
+        if ($data === null) {
+            $cache->set($image->getQuery(), $image->getData(), 3600 * 24);
+        }
 
-  } else {
-    $query = $board.'/'.$tim.'.'.$ext;
-    $data = $cache->get($query);
-
-    if ($data === null) {
-      $data = file_get_contents($image_endpoint.$query);
-      $cache->set($query, $data, 3600*24);
-    }
-
-    switch( $ext ) {
-        case "gif": $ctype="image/gif"; break;
-        case "png": $ctype="image/png"; break;
-        case "jpeg":
-        case "jpg": $ctype="image/jpeg"; break;
-        case 'webm': $ctype="video/webm"; break;
+        switch ($ext) {
+        case 'gif': $ctype = 'image/gif'; break;
+        case 'png': $ctype = 'image/png'; break;
+        case 'jpeg':
+        case 'jpg': $ctype = 'image/jpeg'; break;
+        case 'webm': $ctype = 'video/webm'; break;
         default:
     }
+    }
 
-
-  }
-
-
-
-  header('Content-type: ' . $ctype);
-  echo $data;
-exit();
+header('Content-type: '.$ctype);
+echo( $data);
+    exit();
 }
-
-
-
-
- ?>

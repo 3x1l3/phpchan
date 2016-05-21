@@ -1,11 +1,10 @@
 <?php
 
 require_once 'config.php';
-
 $controller = new Controller();
 $view = new View();
 
-$cache = CacheManager::Files();
+$cache = phpFastCache\CacheManager::Files();
 $boardsJSON = $cache->get('boards');
 
 if ($boardsJSON === null || $_GET['nocache'] == 1) {
