@@ -23,17 +23,18 @@ if (isset($board) && isset($tim)) {
     if ($type == 'thumb' || is_null($type)) {
         $thumb = new ThumbnailSource($tim, $board);
         $data = $cache->get($thumb->getQuery());
-
         if ($data === null) {
-            $cache->set($thumb->getQuery(), $thumb->getData(), 3600 * 24);
+          $data = $thumb->getData();
+            $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
 
-        $ext = 'jpg';
+        $ctype = 'jpg';
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
         if ($data === null) {
-            $cache->set($image->getQuery(), $image->getData(), 3600 * 24);
+            $data = $image->getData();
+            $cache->set($image->getQuery(), $data, 3600 * 24);
         }
 
         switch ($ext) {
@@ -46,7 +47,7 @@ if (isset($board) && isset($tim)) {
     }
     }
 
-header('Content-type: '.$ctype);
-echo( $data);
+   header('Content-type: '.$ctype);
+  echo  $data;
     exit();
 }
