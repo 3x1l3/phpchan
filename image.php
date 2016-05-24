@@ -24,9 +24,15 @@ if (isset($board) && isset($tim)) {
     if ($type == 'thumb' || is_null($type)) {
         $thumb = new ThumbnailSource($tim, $board);
         $data = $cache->get($thumb->getQuery());
+<<<<<<< Updated upstream
         if ($data === null) {
             $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
+=======
+
+        if ($data === null) {
+            $cache->set($thumb->getQuery(), $thumb->getData(), 3600 * 24);
+>>>>>>> Stashed changes
         }
 
         $ext = 'jpg';
@@ -34,8 +40,12 @@ if (isset($board) && isset($tim)) {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
         if ($data === null) {
+<<<<<<< Updated upstream
             $data = $image->getData();
             $cache->set($image->getQuery(), $data, 3600 * 24);
+=======
+            $cache->set($image->getQuery(), $image->getData(), 3600 * 24);
+>>>>>>> Stashed changes
         }
 
         switch ($ext) {
@@ -45,6 +55,7 @@ if (isset($board) && isset($tim)) {
         case 'jpg': $ctype = 'image/jpeg'; break;
         case 'webm': $ctype = 'video/webm'; break;
         default:
+<<<<<<< Updated upstream
     }
     }
 } elseif (isset($threadID) && isset($tim)) {
@@ -64,10 +75,20 @@ if (isset($board) && isset($tim)) {
       $ctype = $info['image_type'];
     }
 
+=======
+>>>>>>> Stashed changes
+    }
     }
 
+<<<<<<< Updated upstream
 
 }
 header('Content-type: '.$ctype);
 echo  $data;
  exit();
+=======
+header('Content-type: '.$ctype);
+echo( $data);
+    exit();
+}
+>>>>>>> Stashed changes
