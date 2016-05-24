@@ -14,6 +14,7 @@ $image_endpoint = 'http://i.4cdn.org/';
 $board = $_GET['board'];
 $tim = $_GET['tim'];
 $ext = $_GET['ext'];
+$threadID = $_GET['threadID'];
 
 $type = isset($_GET['type']) ? $_GET['type'] : null; //::Thumb or full
 
@@ -24,11 +25,11 @@ if (isset($board) && isset($tim)) {
         $thumb = new ThumbnailSource($tim, $board);
         $data = $cache->get($thumb->getQuery());
         if ($data === null) {
-          $data = $thumb->getData();
+            $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
 
-        $ctype = 'jpg';
+        $ext = 'jpg';
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
@@ -46,8 +47,27 @@ if (isset($board) && isset($tim)) {
         default:
     }
     }
+} elseif (isset($threadID) && isset($tim)) {
 
-   header('Content-type: '.$ctype);
-  echo  $data;
-    exit();
+    $result = $mysqli->query("SELECT * FROM images WHERE threadID = '".$threadID."' AND tim = '".$tim."'");
+
+    if ($result->num_rows > 0) {
+      $info = $result->fetch_assoc();
+
+    if ($type == 'thumb') {
+        $data = $info['thumb'];
+        $ctype = $info['thumb_type'];
+
+
+    } else {
+      $data = $info['image'];
+      $ctype = $info['image_type'];
+    }
+
+    }
+
+
 }
+header('Content-type: '.$ctype);
+echo  $data;
+ exit();
