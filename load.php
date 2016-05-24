@@ -35,39 +35,12 @@ $boards = $cache->get('boards');
 echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
 
-$result = $mysqli->query("SELECT * FROM threads WHERE threadID = ".$threadID);
+$result = $mysqli->query("SELECT * FROM images WHERE threadID = ".$threadID);
+var_dump($result,$threadID);
+if ($result->num_rows > 0) {
 
-
-foreach ($thread->posts as $post) {
-    $curl = new Curl\Curl();
-    $curl2 = new Curl\Curl();
-
-    $image = new ImageSource\ImageSource($post->tim, $board, $post->ext);
-    $thumb = new ImageSource\ThumbnailSource($post->tim, $board);
-
-    $curl->get($image->getURL());
-    $curl2->get($thumb->getURL());
-
-    $curl->response_headers = parseResponseHeaders($curl->response_headers);
-    $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
-    $query = "SELECT * FROM images WHERE threadID = '".$threadID."' AND tim = '".$post->tim."'";
-    $result = $mysqli->query($query);
-
-    if ($result->num_rows == 0) {
-        $stmt = $mysqli->prepare('INSERT INTO images (threadID, tim, thumb, image, thumb_type, image_type, thumb_size, image_size) VALUES(?,?,?,?,?,?,?,?)');
-        $null = null;
-        $image_type = $curl->response_headers['Content-Type'];
-        $image_size = (int) $curl->response_headers['Content-Length'];
-        $thumb_size = (int) $curl2->response_headers['Content-Length'];
-        $thumb_type = 'image/jpeg';
-        $tim = (int) $post->tim;
-        $stmt->bind_param('sibbssss', $threadID, $tim, $null, $null, $thumb_type, $image_type, $thumb_size, $image_size);
-        $stmt->send_long_data(2, $curl2->response);
-        $stmt->send_long_data(3, $curl->response);
-        $stmt->execute();
-        $result->close();
-    }
-
+while ($row = $result->fetch_assoc()) {
+  var_dump($row);
     if ($post->filename) {
         if ($post->ext != '.webm') {
             $gif->Add('<div class="thumb-cell well well-sm">');
@@ -86,6 +59,7 @@ foreach ($thread->posts as $post) {
 
         ++$count;
     }
+}
 }
 echo '<div class="gallery">';
 echo '<h3>WebM</h3>';
