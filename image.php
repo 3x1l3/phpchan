@@ -6,11 +6,6 @@ use phpFastCache\CacheManager;
 use ImageSource\ImageSource;
 use ImageSource\ThumbnailSource;
 
-//error_reporting(E_ALL);
-
-$thumbnail_endpoint = 'http://t.4cdn.org/';
-$image_endpoint = 'http://i.4cdn.org/';
-
 $board = $_GET['board'];
 $tim = $_GET['tim'];
 $ext = $_GET['ext'];
@@ -74,4 +69,3 @@ if (isset($board) && isset($tim)) {
 header('Content-type: '.$ctype);
 echo( $data);
     exit();
-}

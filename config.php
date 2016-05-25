@@ -10,8 +10,6 @@ if ($_GET['debug'] == 1)
     error_reporting(E_ALL & ~E_NOTICE);
 
 
-include ('controller.php');
-include ('view.php');
 
 $mysqli = mysqli_connect('localhost','phpchan','phpchan','phpchan');
 
