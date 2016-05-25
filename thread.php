@@ -39,10 +39,11 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
 foreach ($thread->posts as $post) {
 	if ($post->filename) {
+		$url = new ImageUrl($post->tim, $threadID, $board);
 		if ($post->ext != '.webm') {
-			$webm->Add($view->drawThumb(new ImageUrl($post->tim, $threadID, $board)));
+			$gif->Add($view->drawThumb($url, $post->h, $post->w));
 		} else {
-			$webm->Add($view->drawThumb(new ImageUrl($post->tim, $threadID, $board)));
+			$webm->Add($view->drawThumb($url, $post->h, $post->w));
 		}
 
 		$count++;

@@ -4,13 +4,14 @@ $(document).ready(function() {
 
     $('a.popup-trigger').click(
         function() {
-
             var href = $(this).data('img');
             var width = $(this).data('width');
             var type = $(this).data('type');
 
 
             if (type == 'image') {
+              console.log('test');
+
                 $('#popup i.fullscreen-icon').show();
 
                 if (width > $('#popup .modal-dialog').width()) {

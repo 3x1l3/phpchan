@@ -102,10 +102,10 @@ class View
         return $Out;
     }
 
-    public function drawThumb(ImageUrl $url) {
+    public function drawThumb(ImageUrl $url, $width, $height) {
       $content = new Content();
       $content->Add('<div class="thumb-cell well well-sm">');
-      $content->Add('<a class="popup-trigger" data-type="image" data-height="'.$post->h.'" data-width="'.$post->w.'"  data-img="' . $url->build(). '">
+      $content->Add('<a class="popup-trigger" data-type="image" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
         <img class="thumb" src="' . $url->build('thumb') . '" /></a>
       ');
       $content->Add('</div>');
