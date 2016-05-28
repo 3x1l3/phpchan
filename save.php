@@ -49,6 +49,10 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
 $result = $mysqli->query("SELECT * FROM threads WHERE threadID = ".$threadID);
 
+if ($result->num_rows == 0) {
+  $mysqli->query("INSERT INTO threads (ID, board) VALUES (".$threadID.", '".$board."')");
+}
+
 
 foreach ($thread->posts as $post) {
     $curl = new Curl\Curl();
@@ -61,19 +65,23 @@ foreach ($thread->posts as $post) {
     $curl2->get($thumb->getURL());
 
     $curl->response_headers = parseResponseHeaders($curl->response_headers);
+
+
     $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
     $query = "SELECT * FROM images WHERE threadID = '".$threadID."' AND tim = '".$post->tim."'";
     $result = $mysqli->query($query);
 
     if ($result->num_rows == 0) {
-        $stmt = $mysqli->prepare('INSERT INTO images (threadID, tim, thumb, image, thumb_type, image_type, thumb_size, image_size) VALUES(?,?,?,?,?,?,?,?)');
+        $stmt = $mysqli->prepare('INSERT INTO images (threadID, tim, thumb, image, thumb_type, image_type, thumb_size, image_size, image_width, image_height) VALUES(?,?,?,?,?,?,?,?,?,?)');
         $null = null;
         $image_type = $curl->response_headers['Content-Type'];
         $image_size = (int) $curl->response_headers['Content-Length'];
         $thumb_size = (int) $curl2->response_headers['Content-Length'];
         $thumb_type = 'image/jpeg';
         $tim = (int) $post->tim;
-        $stmt->bind_param('sibbssss', $threadID, $tim, $null, $null, $thumb_type, $image_type, $thumb_size, $image_size);
+        $width = $post->w;
+        $height = $post->h;
+        $stmt->bind_param('sibbssssss', $threadID, $tim, $null, $null, $thumb_type, $image_type, $thumb_size, $image_size, $width, $height);
         $stmt->send_long_data(2, $curl2->response);
         $stmt->send_long_data(3, $curl->response);
         $stmt->execute();

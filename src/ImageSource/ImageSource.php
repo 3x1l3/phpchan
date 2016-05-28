@@ -8,11 +8,15 @@ class ImageSource extends ImageSourceAbstract
     public function __construct($tim, $board, $ext) {
       $this->_board = $board;
       $this->_tim = $tim;
-      $this->_ext = $ext;
+      if (substr($ext, 0,1) == '.') {
+        $this->ext = substr($ext, 1, strlen($ext));
+      } else {
+        $this->ext = $ext;
+      }
 
     }
     public function getQuery() {
-        return $this->_board.'/'.$this->_tim.'.'.$this->_ext;
+        return $this->_board.'/'.$this->_tim.'.'.$this->ext;
     }
     public function getURL()
     {

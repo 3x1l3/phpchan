@@ -4,6 +4,7 @@ use phpFastCache\CacheManager;
 require_once ("config.php");
 
 $thread = $_GET['t'];
+$threadID = $_GET['t'];
 $board = $_GET['b'];
 
 $url = 'http://a.4cdn.org/' . $board . '/thread/' . $thread . '.json';
@@ -35,7 +36,7 @@ $webm = new Content();
 $boards = $cache->get('boards');
 
 echo $view->drawBreadcrumb(json_decode($boards)->boards);
-
+echo '<a href="save.php?t='.$threadID.'&b='.$board.'">Save Thread</a>';
 
 foreach ($thread->posts as $post) {
 	if ($post->filename) {

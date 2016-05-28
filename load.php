@@ -17,7 +17,7 @@ $webm = new Content();
 
 echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
-$result = $mysqli->query("SELECT tim FROM images WHERE threadID = ".$threadID);
+$result = $mysqli->query("SELECT * FROM images WHERE threadID = ".$threadID);
 
 
 if ($result->num_rows > 0) {
@@ -27,7 +27,7 @@ while ($row = $result->fetch_assoc()) {
 
         if ($post->ext != '.webm') {
             $gif->Add('<div class="thumb-cell well well-sm">');
-            $gif->Add('<a class="popup-trigger" data-type="image" data-height="'.$post->h.'" data-width="'.$post->w.'"  data-img="'.$img->build().'">
+            $gif->Add('<a class="popup-trigger" data-type="image" data-height="'.$row['image_height'].'" data-width="'.$row['image_width'].'"  data-img="'.$img->build().'">
 				<img class="thumb" src="'.$img->build('thumb').'" /></a>
 			');
             $gif->Add('</div>');
