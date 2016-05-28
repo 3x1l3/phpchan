@@ -19,12 +19,24 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
 
 $result = $mysqli->query("SELECT * FROM images WHERE threadID = ".$threadID);
 
+$zip = new ZipArchive();
+$res = $zip->open('./saved/'.$threadID.'.zip');
 
-if ($result->num_rows > 0) {
 
-while ($row = $result->fetch_assoc()) {
+
+if ($res) {
+
+for ($i=0; $i <= $zip->numFiles; $i++ ) {
+
+  $name = $zip->getNameIndex($i);
+$data =  $zip->getStream($name);
+  var_dump($data);
+  die();
+
   $img = new ImageUrl($row['tim'], $threadID);
-
+  if ($res === true) {
+      $zip->addFromString($row['tim'].'.jpg', $row['image']);
+  }
         if ($post->ext != '.webm') {
             $gif->Add('<div class="thumb-cell well well-sm">');
             $gif->Add('<a class="popup-trigger" data-type="image" data-height="'.$row['image_height'].'" data-width="'.$row['image_width'].'"  data-img="'.$img->build().'">
@@ -45,6 +57,7 @@ while ($row = $result->fetch_assoc()) {
 
 
 }
+$zip->close();
 }
 echo '<div class="gallery">';
 echo '<h3>WebM</h3>';

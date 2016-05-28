@@ -53,7 +53,11 @@ if ($result->num_rows == 0) {
   $mysqli->query("INSERT INTO threads (ID, board) VALUES (".$threadID.", '".$board."')");
 }
 
+if (!is_dir('./saved/') || !file_exists('./saved/'))
+  mkdir('./saved/');
 
+$zip = new ZipArchive();
+$res = $zip->open('./saved/'.$threadID.'.zip', ZipArchive::CREATE);
 foreach ($thread->posts as $post) {
     $curl = new Curl\Curl();
     $curl2 = new Curl\Curl();
@@ -68,24 +72,11 @@ foreach ($thread->posts as $post) {
 
 
     $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
-    $query = "SELECT * FROM images WHERE threadID = '".$threadID."' AND tim = '".$post->tim."'";
-    $result = $mysqli->query($query);
 
-    if ($result->num_rows == 0) {
-        $stmt = $mysqli->prepare('INSERT INTO images (threadID, tim, thumb, image, thumb_type, image_type, thumb_size, image_size, image_width, image_height) VALUES(?,?,?,?,?,?,?,?,?,?)');
-        $null = null;
-        $image_type = $curl->response_headers['Content-Type'];
-        $image_size = (int) $curl->response_headers['Content-Length'];
-        $thumb_size = (int) $curl2->response_headers['Content-Length'];
-        $thumb_type = 'image/jpeg';
-        $tim = (int) $post->tim;
-        $width = $post->w;
-        $height = $post->h;
-        $stmt->bind_param('sibbssssss', $threadID, $tim, $null, $null, $thumb_type, $image_type, $thumb_size, $image_size, $width, $height);
-        $stmt->send_long_data(2, $curl2->response);
-        $stmt->send_long_data(3, $curl->response);
-        $stmt->execute();
-        $result->close();
+    if ($res === true) {
+      if ($zip->locateName($post->tim.$post->ext) === false) {
+        $zip->addFromString($post->tim.$post->ext, $curl->response);
+      } 
     }
 
     if ($post->filename) {
@@ -107,6 +98,8 @@ foreach ($thread->posts as $post) {
         ++$count;
     }
 }
+$zip->close();
+
 echo '<div class="gallery">';
 echo '<h3>WebM</h3>';
 echo '<div>'.$webm.'</div>';
