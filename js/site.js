@@ -10,25 +10,30 @@ $(document).ready(function() {
 
 
             if (type == 'image') {
-              console.log('test');
 
                 $('#popup i.fullscreen-icon').show();
 
                 if (width > $('#popup .modal-dialog').width()) {
                     var img = $('<a href="' + href + '" target="_blank"><img class="fade" src="' + href + '" /></a>');
                     img.find('img').on('load', function() {
+
                         $('#popup .modal-body').html(img);
                         $('#popup').modal('show');
                     });
+                      console.log(img);
                 } else {
 
                     var img = $('<img src="' + href + '" />');
+
                     img.on('load', function() {
+
                         $('#popup .modal-body').html(img);
                         $('#popup').modal('show');
                     });
 
                 }
+
+
             } else {
                 $('#popup i.fullscreen-icon').hide();
 

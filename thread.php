@@ -40,6 +40,7 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
 foreach ($thread->posts as $post) {
 	if ($post->filename) {
 		$url = new ImageUrl($post->tim, $threadID, $board);
+	$url->setExt($post->ext);
 		if ($post->ext != '.webm') {
 			$gif->Add($view->drawThumb($url, $post->h, $post->w));
 		} else {
