@@ -1,12 +1,8 @@
 <?php
-require_once('config.php');
 
-$result = $mysqli->query("SELECT * FROM images WHERE ID = 276");
+  $zip = new ZipArchive();
+  $res = $zip->open('./saved/test.zip', ZipArchive::CREATE);
 
-if ($result->num_rows > 0) {
-$data = $result->fetch_assoc();
-  header('Content-Type: '.$data['image_type']);
-  echo $data['image'];
-  $result->close();
-
-}
+  if ($res) {
+      $zip->addFromString('help/test.txt', 'testing');
+  }

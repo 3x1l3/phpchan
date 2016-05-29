@@ -3,6 +3,7 @@
 use phpFastCache\CacheManager;
 
 require_once 'config.php';
+set_time_limit(0);
 
 $thread = $_GET['t'];
 $threadID = $_GET['t'];
@@ -47,14 +48,15 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
      return $arr;
  }
 
-$result = $mysqli->query("SELECT * FROM threads WHERE threadID = ".$threadID);
+$result = $mysqli->query('SELECT * FROM threads WHERE threadID = '.$threadID);
 
 if ($result->num_rows == 0) {
-  $mysqli->query("INSERT INTO threads (ID, board) VALUES (".$threadID.", '".$board."')");
+    $mysqli->query('INSERT INTO threads (ID, board) VALUES ('.$threadID.", '".$board."')");
 }
 
-if (!is_dir('./saved/') || !file_exists('./saved/'))
-  mkdir('./saved/');
+if (!is_dir('./saved/') || !file_exists('./saved/')) {
+    mkdir('./saved/');
+}
 
 $zip = new ZipArchive();
 $res = $zip->open('./saved/'.$threadID.'.zip', ZipArchive::CREATE);
@@ -69,33 +71,24 @@ foreach ($thread->posts as $post) {
     $curl2->get($thumb->getURL());
 
     $curl->response_headers = parseResponseHeaders($curl->response_headers);
-
-
     $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
 
     if ($res === true) {
-      if ($zip->locateName($post->tim.$post->ext) === false) {
-        $zip->addFromString($post->tim.$post->ext, $curl->response);
-      } 
+        if ($zip->locateName($post->tim.$post->ext) === false && strlen(trim($post->ext)) > 0) {
+            $zip->addFromString($post->tim.$post->ext, $curl->response);
+            $zip->addFromString('thumbs/'.$post->tim.'.jpg', $curl2->response);
+        }
     }
 
     if ($post->filename) {
+      $img = new ImageUrl($post->tim, $threadID, $board);
+      $img->filename = $name;
+
         if ($post->ext != '.webm') {
-            $gif->Add('<div class="thumb-cell well well-sm">');
-            $gif->Add('<a class="popup-trigger" data-type="image" data-height="'.$post->h.'" data-width="'.$post->w.'"  data-img="'.$controller->genImageUrl($post).'">
-				<img class="thumb" src="'.$controller->genThumnailURL($post->tim).'" /></a>
-			');
-            $gif->Add('</div>');
+            $gif->Add($view->drawThumb($img, $post->w, $post->h, 'image'));
         } else {
-            $id = md5($post->filename);
-
-            $webm->Add('<div class="thumb-cell well well-sm">');
-            $webm->Add('<a class="popup-trigger" data-type="video" data-height="'.$post->h.'" data-width="'.$post->w.'"  data-img="'.$controller->genImageUrl($post).'"><img class="thumb" src="'.$controller->genThumnailURL($post->tim).'" /></a>');
-        //	$webm->Add('<div style="display: none"><div id="'.$id.'"><video src="' . $controller->genImageUrl($post) . '" controls></video></div></div>');
-            $webm->Add('</div>');
+            $webm->Add($view->drawThumb($img, $post->w, $post->h, 'video'));
         }
-
-        ++$count;
     }
 }
 $zip->close();

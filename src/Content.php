@@ -18,4 +18,7 @@ class Content {
 	public function __toString() {
 		return $this->build();
 	}
+	public function isEmpty() {
+		return empty($this->_content);
+	}
 }

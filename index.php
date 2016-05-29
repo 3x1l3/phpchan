@@ -24,7 +24,6 @@ foreach ($array->boards as $a) {
 }
 
 $boards = new Content();
-$boards->add('<a href="savedThreads.php">Saved Threads</a>');
 $boards->add('<h2>Work Safe</h2>');
 $boards->add('<table  class="table table-bordered table-condensed">');
 $chunks = array_chunk($ws, 5);

@@ -20,8 +20,12 @@ class View
         $content->add('</head>');
         $content->add('<body>');
         $content->add('<h1>PHPChan</h1>');
-        $content->add('<div class="container-fluid">');
 
+        $content->add('<div class="container-fluid">');
+  $content->add('<ul class="nav nav-pills">
+  <li role="presentation" class="active"><a href="./">Home</a></li>
+  <li role="presentation"><a href="savedThreads.php">Saved Threads</a></li>
+</ul>');
         return $content;
     }
     public function modal()
@@ -82,34 +86,64 @@ class View
         return $content;
     }
 
-    public function drawBreadcrumb(array $boards = null, array $threads = null)
+    public function drawBreadcrumb($current_board, array $boards = null, $threadID = null)
     {
-        $Out = '<h2>';
+        $Out = '<h3>';
         $Out .= '<a href=".">Boards</a> ';
         if ($boards !== null) {
             foreach ($boards as $board) {
                 if ($board->board == $_GET['b']) {
-                    $Out .= '<i class="fa fa-angle-double-right"></i> <a href="board.php?b='.$_GET['b'].'">'.$board->title.'</a>';
+                    $Out .= '<i class="fa fa-angle-double-right"></i> <a href="board.php?b='.$current_board.'">'.$board->title.'</a>';
                 }
             }
         }
 
-        if (isset($_GET['t'])) {
+        if (isset($threadID)) {
+            $Out .= ' <i class="fa fa-angle-double-right"></i> Thread '.$threadID;
+            $Out .= $this->saveButton($threadID, $current_board);
         }
 
-        $Out .= '</h2>';
+        $Out .= '</h3>';
 
         return $Out;
     }
 
-    public function drawThumb(ImageUrl $url, $width, $height) {
+    public function drawThumb(ImageUrl $url, $width, $height ,$type, $saved = false) {
       $content = new Content();
       $content->Add('<div class="thumb-cell well well-sm">');
-      $content->Add('<a class="popup-trigger" data-type="image" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
+
+      if ($saved)
+      $content->Add('<i class="btn btn-default fa fa-floppy-o"></i>');
+      $content->Add('<a class="popup-trigger" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
         <img class="thumb" src="' . $url->build('thumb') . '" /></a>
       ');
       $content->Add('</div>');
 
       return $content->build();
     }
+
+    public function alert($a_title, $a_message, $a_type) {
+
+        $out = '<div class="alert alert-'.$a_type.'"><h2> '.$a_title.'</h2>';
+        $out .=  '<p>'.$a_message.'</p></div>';
+        return $out;
+    }
+
+    public function saveButton($threadID, $board) {
+      $saved = file_exists('./saved/'.$threadID.'.zip');
+        if ($saved)
+          $icon = 'fa-star ';
+        else {
+          $icon = 'fa-star-o';
+        }
+        $out ='<div class="btn-group pull-right" role="group">';
+        $out .= '<a class="btn btn-default " href="save.php?t='.$threadID.'&b='.$board.'"><i class="text-warning fa '.$icon.'"></i> </a>';
+
+        if ($saved) {
+          $out .= '<a class="btn btn-default" href="load.php?t='.$threadID.'">Show Saved</a>';
+        }
+$out .= '</div>';
+        return $out;
+    }
+
 }

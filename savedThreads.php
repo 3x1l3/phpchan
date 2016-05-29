@@ -8,24 +8,39 @@ $thread = $_GET['t'];
 $threadID = $_GET['t'];
 $board = $_GET['b'];
 
-$url = 'http://a.4cdn.org/'.$board.'/thread/'.$thread.'.json';
-
 $controller = new Controller();
 $view = new View();
 
 echo $view->header();
 
-$result = $mysqli->query("SELECT * FROM threads");
+$files = scandir('./saved/');
+$bad = array('.','..');
+foreach ($files as $file) {
+  if (!in_array($file, $bad)) {
+    $chunks = explode('.',$file);
+    $threadID = $chunks[0];
 
-if ($result->num_rows > 0) {
+    $zip = new ZipArchive();
+    $res = $zip->open('./saved/'.$threadID.'.zip');
+    if ($res) {
+      $name = $zip->getNameIndex(0);
 
-  while ($row = $result->fetch_assoc()) {
+    }
+    $img = new ImageUrl(null, $threadID);
+    $img->filename = $name;
 
-      echo '<a href="load.php?t='.$row['ID'].'">'.$row['ID'].'</a><br />';
+    echo '<a href="load.php?t='.$threadID.'"><div class="thumb-cell well well-sm">
+      '.$threadID.'
+    <img class="thumb" src="'.$img->build('thumb').'" />
 
+
+    </div></a>';
   }
 
-
 }
+
+
+
+
 
 echo $view->footer();
