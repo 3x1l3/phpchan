@@ -30,7 +30,7 @@ foreach ($files as $file) {
     $img->filename = $name;
 
     echo '<a href="load.php?t='.$threadID.'"><div class="thumb-cell well well-sm">
-      '.$threadID.'
+      '.$threadID.' <a href="delete.php?threadID='.$threadID.'" class=""><i class="fa fa-trash"></i></a>
     <img class="thumb" src="'.$img->build('thumb').'" />
 
 

@@ -28,7 +28,14 @@ foreach ($array->threads as $thread) {
 
 	if ($first -> closed != 1) {
 
+		$zip = new Zip();
+		$saved = $zip->threadSaved($first->no);
+
 		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm row board">';
+
+		if ($saved)
+			echo '<i class="btn btn-default fa fa-floppy-o"></i>';
+
 		echo '<div class="col-md-2 col-sm-2 col-xs-2"><img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" /></div>';
 		echo '<div class="col-md-10 col-sm-10 col-xs-10"><h3>' . $first -> sub . '</h3>';
 		echo '<p>' . $first -> com . '</p>';

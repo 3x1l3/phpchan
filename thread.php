@@ -40,19 +40,19 @@ foreach ($thread->posts as $post) {
     if ($post->filename) {
         $url = new ImageUrl($post->tim, $threadID, $board);
         $url->setExt($post->ext);
-
+        $saved = false;
 				if (file_exists('./saved/'.$threadID.'.zip')) {
 					$zip = new ZipArchive();
 					$res = $zip->open('./saved/'.$threadID.'.zip');
 					if ($res) {
-						var_dump($zip->getFromName($post->tim.''.$post->ext),$post->tim.'.'.$post->ext);
+						$saved = (bool)$zip->getFromName($post->tim.''.$post->ext);
 					}
 				}
 
         if ($post->ext != '.webm') {
-            $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image'));
+            $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved));
         } else {
-            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video'));
+            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video',$saved));
         }
 
         ++$count;
