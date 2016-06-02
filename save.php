@@ -48,15 +48,13 @@ echo $view->drawBreadcrumb(json_decode($boards)->boards);
      return $arr;
  }
 
-$result = $mysqli->query('SELECT * FROM threads WHERE threadID = '.$threadID);
 
-if ($result->num_rows == 0) {
-    $mysqli->query('INSERT INTO threads (ID, board) VALUES ('.$threadID.", '".$board."')");
-}
-
-if (!is_dir('./saved/') || !file_exists('./saved/')) {
+if (!is_dir('./saved') || !file_exists('./saved')) {
     mkdir('./saved/');
 }
+
+if (!is_writable('./saved'))
+  chmod('./saved/',0777);
 
 $zip = new ZipArchive();
 $res = $zip->open('./saved/'.$threadID.'.zip', ZipArchive::CREATE);
