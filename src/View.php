@@ -1,6 +1,4 @@
 <?php
-use Curl\Curl;
-
 
 class View
 {
@@ -8,10 +6,8 @@ class View
     {
     }
 
-    public function header($active = 'home')
+    public function header()
     {
-
-
         $content = new \Content();
         $content->add('<!DOCTYPE html>');
         $content->add('<html><head><title>PHPChan</title>');
@@ -23,13 +19,12 @@ class View
         $content->add('<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
         $content->add('</head>');
         $content->add('<body>');
-
+        $content->add('<h1>PHPChan</h1>');
 
         $content->add('<div class="container-fluid">');
-        $content->add('<h1>PHPChan</h1>');
   $content->add('<ul class="nav nav-pills">
-  <li role="presentation" class="'.($active=='home'?'active':'').'"><a href="./">Home</a></li>
-  <li role="presentation"  class="'.($active=='saved'||$active=='loaded'?'active':'').'"><a href="savedThreads.php">Saved Threads</a></li>
+  <li role="presentation" class="active"><a href="./">Home</a></li>
+  <li role="presentation"><a href="savedThreads.php">Saved Threads</a></li>
 </ul>');
         return $content;
     }
@@ -108,22 +103,9 @@ class View
             $Out .= $this->saveButton($threadID, $current_board);
         }
 
-
-
-
         $Out .= '</h3>';
 
         return $Out;
-    }
-
-    public function currentThread($board, $threadID) {
-      if ($threadID !== null) {
-      $url = 'http://a.4cdn.org/'.$board.'/thread/'.$threadID.'.json';
-
-      $curl = new Curl();
-      $curl->get($url);
-      var_dump($curl);
-      }
     }
 
     public function drawThumb(ImageUrl $url, $width, $height ,$type, $saved = false) {

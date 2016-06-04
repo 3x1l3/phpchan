@@ -11,7 +11,7 @@ $board = $_GET['b'];
 $controller = new Controller();
 $view = new View();
 
-echo $view->header('saved');
+echo $view->header();
 
 $files = scandir('./saved/');
 $bad = array('.','..');
@@ -20,8 +20,12 @@ foreach ($files as $file) {
     $chunks = explode('.',$file);
     $threadID = $chunks[0];
 
-    $zip = new Zip($threadID);
-    $name = $zip->getNameAtIndex(0);
+    $zip = new ZipArchive();
+    $res = $zip->open('./saved/'.$threadID.'.zip');
+    if ($res) {
+      $name = $zip->getNameIndex(0);
+
+    }
     $img = new ImageUrl(null, $threadID);
     $img->filename = $name;
 
