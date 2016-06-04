@@ -26,6 +26,11 @@ if ($zip->hasResource()) {
 
     for ($i = 0; $i <= $zip->getNumFiles(); ++$i) {
         $name = $zip->getNameAtIndex($i);
+        $file = $zip->getFileAtIndex($i);
+
+        $res = imagecreatefromstring($file);
+        $width = imagesx($res);
+        $height = imagesy($res);
 
         $img = new ImageUrl(null, $threadID);
         $img->filename = $name;
@@ -35,9 +40,9 @@ if ($zip->hasResource()) {
 
         if ($name != 0) {
             if ($extension != 'webm') {
-                $gif->Add($view->drawThumb($img, 0, 0, 'image'));
+                $gif->Add($view->drawThumb($img, $width, $height, 'image'));
             } else {
-                $webm->Add($view->drawThumb($img, 0, 0, 'video'));
+                $webm->Add($view->drawThumb($img, $width, $height, 'video'));
             }
         }
     }

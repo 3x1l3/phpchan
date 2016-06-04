@@ -64,6 +64,18 @@ class Zip
             return $this->_archive->getNameIndex($index);
         }
     }
+    /**
+     * [getFileAtIndex description]
+     * @param  [type] $index [description]
+     * @return [type]        [description]
+     */
+        public function getFileAtIndex($index) {
+          if ($this->hasResource()) {
+            return $this->_archive->getFromIndex($index);
+          }
+        }
+
+
 
     private function cleanExt($ext)
     {
