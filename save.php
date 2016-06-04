@@ -56,8 +56,9 @@ if (!is_dir('./saved') || !file_exists('./saved')) {
 if (!is_writable('./saved'))
   chmod('./saved/',0777);
 
-$zip = new ZipArchive();
-$res = $zip->open('./saved/'.$threadID.'.zip', ZipArchive::CREATE);
+$zip = new Zip($threadID);
+
+
 foreach ($thread->posts as $post) {
     $curl = new Curl\Curl();
     $curl2 = new Curl\Curl();
@@ -71,12 +72,8 @@ foreach ($thread->posts as $post) {
     $curl->response_headers = parseResponseHeaders($curl->response_headers);
     $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
 
-    if ($res === true) {
-        if ($zip->locateName($post->tim.$post->ext) === false && strlen(trim($post->ext)) > 0) {
-            $zip->addFromString($post->tim.$post->ext, $curl->response);
-            $zip->addFromString('thumbs/'.$post->tim.'.jpg', $curl2->response);
-        }
-    }
+    $zip->saveToArchive($curl->response, $post->tim.$post->ext);
+    $zip->saveToArchive($curl2->response, 'thumbs/'.$post->tim.'.jpg');
 
     if ($post->filename) {
       $img = new ImageUrl($post->tim, $threadID, $board);
@@ -89,7 +86,6 @@ foreach ($thread->posts as $post) {
         }
     }
 }
-$zip->close();
 
 echo '<div class="gallery">';
 echo '<h3>WebM</h3>';

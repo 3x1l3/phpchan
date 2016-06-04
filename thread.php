@@ -34,25 +34,22 @@ $webm = new Content();
 $boards = $cache->get('boards');
 
 echo $view->drawBreadcrumb($board, json_decode($boards)->boards, $threadID);
-echo '';
 
+
+
+echo '';
+    $zip = new Zip($threadID);
 foreach ($thread->posts as $post) {
     if ($post->filename) {
         $url = new ImageUrl($post->tim, $threadID, $board);
         $url->setExt($post->ext);
-        $saved = false;
-				if (file_exists('./saved/'.$threadID.'.zip')) {
-					$zip = new ZipArchive();
-					$res = $zip->open('./saved/'.$threadID.'.zip');
-					if ($res) {
-						$saved = (bool)$zip->getFromName($post->tim.''.$post->ext);
-					}
-				}
+
+        $saved = $zip->fileSaved($post->tim, $post->ext);
 
         if ($post->ext != '.webm') {
             $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved));
         } else {
-            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video',$saved));
+            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video', $saved));
         }
 
         ++$count;
@@ -66,10 +63,10 @@ if (!$webm->isEmpty()) {
 }
 
 if (!$gif->isEmpty()) {
-echo '<h3>Other</h3>';
+    echo '<h3>Other</h3>';
 
-echo '<div>'.$gif;
-echo '</div>';
+    echo '<div>'.$gif;
+    echo '</div>';
 }
 echo $view->modal();
 echo $view->footer();
