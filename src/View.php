@@ -33,21 +33,7 @@ class View
 </ul>');
         return $content;
     }
-    public function modal()
-    {
-        return '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
-		  <div class="modal-dialog" role="document">
 
-		    <div class="modal-content">
-				<i class="fa fa-arrows-alt fullscreen-icon"></i>
-		      <div class="modal-body">
-
-		      </div>
-
-		    </div>
-		  </div>
-		</div>';
-    }
 
     public function pagination($p, $b)
     {
@@ -108,12 +94,32 @@ class View
             $Out .= $this->saveButton($threadID, $current_board);
         }
 
-
-
-
         $Out .= '</h3>';
 
         return $Out;
+    }
+
+
+    public function modal($id, $title, $body) {
+      $out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">'.$title.'</h4>
+      </div>
+      <div class="modal-body">
+        '.$body.'
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>';
+
+return $out;
     }
 
     public function currentThread($board, $threadID) {
