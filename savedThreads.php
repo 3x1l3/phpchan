@@ -40,8 +40,8 @@ foreach ($files as $file) {
 
 '.$view->modal($threadID, 'Delete Thread '.$threadID,
 $view->alert('<i class="fa fa-exclamation-circle"></i> Are you sure you want to delete this thread?', 'There is no going back after this.
-<form method="POST">
-<p><button name="submit" class="btn btn-success" value="1"><i class="fa fa-check"></i> Yes</button></p>
+<form method="POST"><br />
+<p><button name="submit" class="btn btn-success delete-button" value="'.$threadID.'"><i class="fa fa-check"></i> Yes</button></p>
 </form>', 'info')).'
     </div>';
         }

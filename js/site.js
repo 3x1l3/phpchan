@@ -1,6 +1,24 @@
 $(document).ready(function() {
 
 
+    $('button.delete-button').click(function() {
+
+        var threadID = $(this).val();
+
+        $.ajax({
+          method: 'POST',
+          url: './requests/delete.php',
+          data: {threadID: threadID},
+          success: function(msg) {
+            if (parseInt(msg) == 1)
+                location.reload();
+          }
+
+        });
+
+        return false;
+
+    });
 
     $('a.popup-trigger').click(
         function() {
