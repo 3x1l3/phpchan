@@ -29,12 +29,15 @@ foreach ($files as $file) {
     $img = new ImageUrl(null, $threadID);
     $img->filename = $name;
 
-    echo '<a href="load.php?t='.$threadID.'"><div class="thumb-cell well well-sm">
-      '.$threadID.' <a href="delete.php?threadID='.$threadID.'" class=""><i class="fa fa-trash"></i></a>
-    <img class="thumb" src="'.$img->build('thumb').'" />
+    echo '
+    <div class="thumb-cell well well-sm">
+    <a href="load.php?t='.$threadID.'">  '.$threadID.' </a> <a  data-toggle="modal" data-target="#'.$threadID.'">
+      <i class="fa fa-trash"></i>
+      </a>
+  <a href="load.php?t='.$threadID.'">  <img class="thumb" src="'.$img->build('thumb').'" /></a>
 
-
-    </div></a>';
+'.$view->modal($threadID, 'Delete Thread','').'
+    </div>';
   }
 
 }
