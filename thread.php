@@ -71,5 +71,5 @@ echo '<h3>Other</h3>';
 echo '<div>'.$gif;
 echo '</div>';
 }
-echo $view->modal();
+echo $view->blankModal();
 echo $view->footer();

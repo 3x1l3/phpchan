@@ -6,28 +6,26 @@ class View
     {
     }
 
-    public function header()
-    {
-        $content = new \Content();
-        $content->add('<!DOCTYPE html>');
-        $content->add('<html><head><title>PHPChan</title>');
-        $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');
-        $content->add('<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
-        $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
-
-        $content->add('<link rel="stylesheet" href="./css/styles.css" />');
-        $content->add('<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
-        $content->add('</head>');
-        $content->add('<body>');
-        $content->add('<h1>PHPChan</h1>');
-
-        $content->add('<div class="container-fluid">');
-  $content->add('<ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="./">Home</a></li>
-  <li role="presentation"><a href="savedThreads.php">Saved Threads</a></li>
-</ul>');
-        return $content;
-    }
+    public function header($active = 'home')
+       {
+           $content = new \Content();
+           $content->add('<!DOCTYPE html>');
+           $content->add('<html><head><title>PHPChan</title>');
+           $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');
+           $content->add('<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
+           $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
+           $content->add('<link rel="stylesheet" href="./css/styles.css" />');
+           $content->add('<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
+           $content->add('</head>');
+           $content->add('<body>');
+           $content->add('<div class="container-fluid">');
+           $content->add('<h1>PHPChan</h1>');
+     $content->add('<ul class="nav nav-pills">
+     <li role="presentation" class="'.($active=='home'?'active':'').'"><a href="./">Home</a></li>
+     <li role="presentation"  class="'.($active=='saved'||$active=='loaded'?'active':'').'"><a href="savedThreads.php">Saved Threads</a></li>
+   </ul>');
+           return $content;
+       }
 
 
     public function pagination($p, $b)
@@ -94,6 +92,18 @@ class View
         return $Out;
     }
 
+    public function blankModal()
+        {
+            return '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
+    		  <div class="modal-dialog" role="document">
+    		    <div class="modal-content">
+    				<i class="fa fa-arrows-alt fullscreen-icon"></i>
+    		      <div class="modal-body">
+    		      </div>
+    		    </div>
+    		  </div>
+    		</div>';
+        }
 
     public function modal($id, $title, $body) {
       $out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">
@@ -106,10 +116,7 @@ class View
       <div class="modal-body">
         '.$body.'
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
     </div>
   </div>
 </div>';
@@ -131,9 +138,10 @@ return $out;
       return $content->build();
     }
 
+
     public function alert($a_title, $a_message, $a_type) {
 
-        $out = '<div class="alert alert-'.$a_type.'"><h2> '.$a_title.'</h2>';
+        $out = '<div class="alert alert-'.$a_type.'"><h3> '.$a_title.'</h3>';
         $out .=  '<p>'.$a_message.'</p></div>';
         return $out;
     }

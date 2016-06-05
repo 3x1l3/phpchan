@@ -3,6 +3,14 @@
 class Zip
 {
     private $_filePath = './saved/';
+    public function __construct($threadID = null)
+        {
+            $this->_archive = new ZipArchive();
+            if ($threadID !== null) {
+                $this->setThreadID($threadID);
+                $this->openArchive();
+            }
+        }
 
     public function threadSaved($threadID)
     {

@@ -1,6 +1,8 @@
 
 div.container-fluid {
-	margin: 50px 0;
+	margin: 50px auto;
+	width: 90%;
+
 }
 div.row {
 
@@ -9,7 +11,9 @@ div.row img.thumb {
 
 	width: 100%;
 }
-
+a[data-toggle="modal"]  {
+	cursor: pointer;
+}
 div.thumb-cell {
 	width: 12%;
 	float: left;
@@ -19,7 +23,7 @@ div.thumb-cell {
 	margin: 0.25%;
 	position: relative;
 }
-div.thumb-cell i.fa {
+div.thumb-cell > a > i.fa {
 	position: absolute;
 	top: 6px;
 	right: 6px;
