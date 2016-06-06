@@ -4,8 +4,8 @@ div.container-fluid {
 	width: 90%;
 
 }
-div.row {
-
+div.board {
+	overflow:auto;
 }
 div.row img.thumb {
 

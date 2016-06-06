@@ -20,7 +20,7 @@ class View
            $content->add('<body>');
            $content->add('<div class="container-fluid">');
            $content->add('<h1>PHPChan</h1>');
-     $content->add('<ul class="nav nav-pills">
+     $content->add('<ul class="nav nav-tabs">
      <li role="presentation" class="'.($active=='home'?'active':'').'"><a href="./">Home</a></li>
      <li role="presentation"  class="'.($active=='saved'||$active=='loaded'?'active':'').'"><a href="savedThreads.php">Saved Threads</a></li>
    </ul>');
