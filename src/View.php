@@ -129,7 +129,7 @@ return $out;
       $content->Add('<div class="thumb-cell well well-sm">');
 
       if ($saved)
-      $content->Add('<i class="btn btn-default fa fa-floppy-o"></i>');
+      $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
       $content->Add('<a class="popup-trigger" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
         <img class="thumb" src="' . $url->build('thumb') . '" /></a>
       ');
@@ -141,7 +141,11 @@ return $out;
 
     public function alert($a_title, $a_message, $a_type) {
 
-        $out = '<div class="alert alert-'.$a_type.'"><h3> '.$a_title.'</h3>';
+        $out = '<div class="alert alert-'.$a_type.'">';
+
+          if (strlen(trim($a_title)) > 0)
+            $out .= '<h3> '.$a_title.'</h3>';
+
         $out .=  '<p>'.$a_message.'</p></div>';
         return $out;
     }

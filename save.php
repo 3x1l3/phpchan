@@ -91,6 +91,10 @@ foreach ($thread->posts as $post) {
 }
 $zip->close();
 
+$DB = new DB();
+$DB->insert('threads', array('ID'=>$threadID, 'board'=>$board));
+
+
 echo '<div class="gallery">';
 echo '<h3>WebM</h3>';
 echo '<div>'.$webm.'</div>';
