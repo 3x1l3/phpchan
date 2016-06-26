@@ -1,3 +1,21 @@
+function removeGetVar(queryStr, name) {
+    var chunks = queryStr.split('&');
+
+    chunks.forEach(function(val, index) {
+        var subchunk = val.split('=');
+        if (subchunk[0] == name) {
+
+            chunks[index] = null;
+            console.log(name,chunks,index);
+        }
+
+
+
+    });
+
+    return chunks.join('&');
+}
+
 $(document).ready(function() {
 
 
@@ -44,6 +62,9 @@ $(document).ready(function() {
                     if (type == 'image') {
                         $('#popup i.fullscreen-icon').show();
 
+                        href = removeGetVar(href, 'base64');
+
+                        console.log();
 
                         if (width > $('#popup .modal-dialog').width()) {
                             img = $('<a href="' + href + '" target="_blank"><img class="fade" src="data:image/' + ext + ';base64,' + data + '" /></a>');
