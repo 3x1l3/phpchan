@@ -4,9 +4,7 @@ function removeGetVar(queryStr, name) {
     chunks.forEach(function(val, index) {
         var subchunk = val.split('=');
         if (subchunk[0] == name) {
-
-            chunks[index] = null;
-            console.log(name,chunks,index);
+            chunks.splice(index, 1);
         }
 
 
