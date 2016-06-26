@@ -128,9 +128,11 @@ return $out;
       $content = new Content();
       $content->Add('<div class="thumb-cell well well-sm">');
 
+      $url->base64 = 1;
+
       if ($saved)
       $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
-      $content->Add('<a class="popup-trigger" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
+      $content->Add('<a class="popup-trigger" data-ext="'.$url->ext.'" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
         <img class="thumb" src="' . $url->build('thumb') . '" /></a>
       ');
       $content->Add('</div>');

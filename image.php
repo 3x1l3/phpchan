@@ -53,13 +53,12 @@ if (isset($board) && isset($tim)) {
 
             //::if no thumbnail file was found use original.
             if ($data === false) {
-              $data = $zip->getFromName($filename);
-              $ext = $chunks[1];
+                $data = $zip->getFromName($filename);
+                $ext = $chunks[1];
             }
-
         } else {
-          $data = $zip->getFromName($filename);
-      }
+            $data = $zip->getFromName($filename);
+        }
     }
     $zip->close();
 }
@@ -72,6 +71,11 @@ case 'jpg': $ctype = 'image/jpeg'; break;
 case 'webm': $ctype = 'video/webm'; break;
 default:
 }
-header('Content-type: '.$ctype);
-echo  $data;
+
+if ($_GET['base64'] == 1) {
+    echo base64_encode($data);
+} else {
+    header('Content-type: '.$ctype);
+    echo  $data;
+}
     exit();
