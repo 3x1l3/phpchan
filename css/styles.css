@@ -68,7 +68,59 @@ text-align:center;
 	left: calc(50% - 50px);
 	top: calc(50% - 50px);
 	font-size: 100px;
+	z-index:0;
 
+}
+#popup .modal-content div.back {
+	position: absolute;
+	font-size: 50px;
+	z-index: 2;
+	width: 50px;
+	text-align:center;
+	top:15px;
+	bottom: 15px;
+}
+#popup .modal-content div.back a {
+	height: 100%;
+	display: block;
+	color:#FFF;
+	opacity: 0.5;
+}
+#popup .modal-content div.back a:hover {
+	transition: 0.5s;
+	background-color:#000;
+	opacity: 0.5;
+}
+#popup .modal-content div.back i {
+	position: absolute;
+	top: calc(50% - 25px);
+	left: 3px;
+}
+
+#popup .modal-content div.forward {
+	position: absolute;
+	font-size: 50px;
+	z-index: 2;
+	width: 50px;
+	right: 15px;
+	top:15px;
+	bottom: 15px;
+}
+#popup .modal-content div.forward a {
+	height: 100%;
+	display: block;
+	color:#FFF;
+	opacity: 0.5;
+}
+#popup .modal-content div.forward a:hover {
+	transition: 0.5s;
+	background-color:#000;
+	opacity: 0.5;
+}
+#popup .modal-content div.forward i {
+	position: absolute;
+	top: calc(50% - 25px);
+	right: 3px;
 }
 
 #popup i.loading {
@@ -77,8 +129,8 @@ font-size: 100px;
 }
 
 #popup .modal-body img.fade:hover {
-	transition: 0.5s;
-	opacity: 0.1;
+	/*transition: 0.5s;
+	opacity: 0.1;*/
 }
 
 

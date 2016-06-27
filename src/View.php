@@ -7,26 +7,26 @@ class View
     }
 
     public function header($active = 'home')
-       {
-           $content = new \Content();
-           $content->add('<!DOCTYPE html>');
-           $content->add('<html><head><title>PHPChan</title>');
-           $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');
-           $content->add('<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
-           $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
-           $content->add('<link rel="stylesheet" href="./css/styles.css" />');
-           $content->add('<link rel="stylesheet" href="./css/jquery.fancybox.css" />');
-           $content->add('</head>');
-           $content->add('<body>');
-           $content->add('<div class="container-fluid">');
-           $content->add('<h1>PHPChan</h1>');
-     $content->add('<ul class="nav nav-tabs">
-     <li role="presentation" class="'.($active=='home'?'active':'').'"><a href="./">Home</a></li>
-     <li role="presentation"  class="'.($active=='saved'||$active=='loaded'?'active':'').'"><a href="savedThreads.php">Saved Threads</a></li>
+    {
+        $content = new \Content();
+        $content->add('<!DOCTYPE html>');
+        $content->add('<html><head><title>PHPChan</title>');
+        $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');
+        $content->add('<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
+        $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
+        $content->add('<link rel="stylesheet" href="./css/styles.css" />');
+        $content->add('<link rel="stylesheet" href="./css/ekko-lightbox.min.css" />');
+        $content->add('</head>');
+        $content->add('<body>');
+        $content->add('<div class="container-fluid">');
+        $content->add('<h1>PHPChan</h1>');
+        $content->add('<ul class="nav nav-tabs">
+     <li role="presentation" class="'.($active == 'home' ? 'active' : '').'"><a href="./">Home</a></li>
+     <li role="presentation"  class="'.($active == 'saved' || $active == 'loaded' ? 'active' : '').'"><a href="savedThreads.php">Saved Threads</a></li>
    </ul>');
-           return $content;
-       }
 
+        return $content;
+    }
 
     public function pagination($p, $b)
     {
@@ -59,9 +59,10 @@ class View
         $content->add('</div>');
 
         $content->add('<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>');
-        $content->add('<script src="./js/jquery.fancybox.js"></script>');
 
         $content->add('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>');
+        $content->add('<script src="./js/ekko-lightbox.min.js"></script>');
+
         $content->add('<script src="./js/site.js"></script>');
 
         $content->add('</body>');
@@ -93,20 +94,21 @@ class View
     }
 
     public function blankModal()
-        {
-            return '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
+    {
+        return '<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popup">
     		  <div class="modal-dialog" role="document">
     		    <div class="modal-content">
-    				<i class="fa fa-arrows-alt fullscreen-icon"></i>
+
     		      <div class="modal-body">
     		      </div>
     		    </div>
     		  </div>
     		</div>';
-        }
+    }
 
-    public function modal($id, $title, $body) {
-      $out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">
+    public function modal($id, $title, $body)
+    {
+        $out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -121,52 +123,58 @@ class View
   </div>
 </div>';
 
-return $out;
-    }
-
-    public function drawThumb(ImageUrl $url, $width, $height ,$type, $saved = false) {
-      $content = new Content();
-      $content->Add('<div class="thumb-cell well well-sm">');
-
-      $url->base64 = 1;
-
-      if ($saved)
-      $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
-      $content->Add('<a class="popup-trigger" data-ext="'.$url->ext.'" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="' . $url->build(). '">
-        <img class="thumb" src="' . $url->build('thumb') . '" /></a>
-      ');
-      $content->Add('</div>');
-
-      return $content->build();
-    }
-
-
-    public function alert($a_title, $a_message, $a_type) {
-
-        $out = '<div class="alert alert-'.$a_type.'">';
-
-          if (strlen(trim($a_title)) > 0)
-            $out .= '<h3> '.$a_title.'</h3>';
-
-        $out .=  '<p>'.$a_message.'</p></div>';
         return $out;
     }
 
-    public function saveButton($threadID, $board) {
-      $saved = file_exists('./saved/'.$threadID.'.zip');
-        if ($saved)
-          $icon = 'fa-star ';
-        else {
-          $icon = 'fa-star-o';
+    public function drawThumb(ImageUrl $url, $width, $height, $type, $saved = false, $index = null)
+    {
+        $content = new Content();
+        $content->Add('<div class="thumb-cell well well-sm">');
+
+        $url->base64 = 1;
+
+        if ($saved) {
+            $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
         }
-        $out ='<div class="btn-group pull-right" role="group">';
+
+
+        $content->Add('<a class="popup-trigger" data-gallery="gallery" data-index="'.$index.'" data-ext="'.$url->ext.'" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="'.$url->build().'">
+        <img class="thumb" src="'.$url->build('thumb').'" /></a>
+      ');
+        $content->Add('</div>');
+
+        return $content->build();
+    }
+
+    public function alert($a_title, $a_message, $a_type)
+    {
+        $out = '<div class="alert alert-'.$a_type.'">';
+
+        if (strlen(trim($a_title)) > 0) {
+            $out .= '<h3> '.$a_title.'</h3>';
+        }
+
+        $out .=  '<p>'.$a_message.'</p></div>';
+
+        return $out;
+    }
+
+    public function saveButton($threadID, $board)
+    {
+        $saved = file_exists('./saved/'.$threadID.'.zip');
+        if ($saved) {
+            $icon = 'fa-star ';
+        } else {
+            $icon = 'fa-star-o';
+        }
+        $out = '<div class="btn-group pull-right" role="group">';
         $out .= '<a class="btn btn-default " href="save.php?t='.$threadID.'&b='.$board.'"><i class="text-warning fa '.$icon.'"></i> </a>';
 
         if ($saved) {
-          $out .= '<a class="btn btn-default" href="load.php?t='.$threadID.'">Show Saved</a>';
+            $out .= '<a class="btn btn-default" href="load.php?t='.$threadID.'">Show Saved</a>';
         }
-$out .= '</div>';
+        $out .= '</div>';
+
         return $out;
     }
-
 }

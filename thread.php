@@ -35,7 +35,6 @@ $boards = $cache->get('boards');
 
 echo $view->drawBreadcrumb($board, json_decode($boards)->boards, $threadID);
 echo '';
-
 foreach ($thread->posts as $post) {
     if ($post->filename) {
         $url = new ImageUrl($post->tim, $threadID, $board);
@@ -50,26 +49,23 @@ foreach ($thread->posts as $post) {
         }
 
         if ($post->ext != '.webm') {
-            $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved));
+            $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved, $count));
         } else {
-            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video', $saved));
+            $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video', $saved, $count));
         }
 
         ++$count;
     }
 }
+
 echo '<div class="gallery">';
 
 if (!$webm->isEmpty()) {
-    echo '<h3>WebM</h3>';
-    echo '<div>'.$webm.'</div>';
+    echo $webm;
 }
 
 if (!$gif->isEmpty()) {
-    echo '<h3>Other</h3>';
-
-    echo '<div>'.$gif;
-    echo '</div>';
+    echo $gif;
 }
 echo $view->blankModal();
 echo $view->footer();

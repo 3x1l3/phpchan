@@ -38,66 +38,40 @@ $(document).ready(function() {
 
     });
 
+
+    $(document).on('click','div.back,div.forward',function() {
+        var index = $(this).data('index');
+
+        if (index < 0) {
+          index = $(this).closest('.gallery').children('.thumb-cell').length-1;
+          console.log(index);
+        }
+        else if (index >= $(this).closest('.gallery').children('.thumb-cell').length) {
+          index = 0;
+        }
+
+        var info = $(this).closest('.gallery').children('.thumb-cell').eq(index).children('a');
+        drawModal(info.data('img'),info.data('width'),info.data('type'),info.data('ext'),info.data('index'));
+
+    });
+
+
     $('a.popup-trigger').click(
         function() {
+
+
+
             var href = $(this).data('img');
             var width = $(this).data('width');
             var type = $(this).data('type');
             var ext = $(this).data('ext');
+            var index = $(this).data('index');
 
             if (ext == 'jpg')
                 ext = 'jpeg';
 
+            drawModal(href, width, type, ext, index);
 
-
-            $.ajax({
-                type: 'GET',
-                url: href,
-                //  dataType: "image/" + ext,
-                procssData: false,
-                success: function(data) {
-
-                    if (type == 'image') {
-                        $('#popup i.fullscreen-icon').show();
-
-                        href = removeGetVar(href, 'base64');
-
-                        console.log();
-
-                        if (width > $('#popup .modal-dialog').width()) {
-                            img = $('<a href="' + href + '" target="_blank"><img class="fade" src="data:image/' + ext + ';base64,' + data + '" /></a>');
-                        } else {
-                            img = $('<img src="' + data + '" />');
-
-                        }
-                        $('#popup .modal-body').html(img);
-                        $('#popup').modal('show');
-                    } else {
-
-                        $('#popup i.fullscreen-icon').hide();
-
-                        var video = $('<video id="vid" src="data:video/' + ext + ';base64,' + data + '" controls style="display: none;"></video>' + '<i class="fa fa-spin fa-spinner loading"></i>');
-
-                        $('#popup .modal-body').html(video);
-                        $('#popup').modal('show');
-                        //	$('#popup .modal-dialog').width();
-                        $('#popup .modal-body video').on('canplaythrough', function() {
-
-                            $(this).attr('style', '');
-                            $('#popup').find('.fa-spinner').remove();
-
-                        });
-
-
-
-                    }
-
-
-                },
-                error: function(e, textStatus, e2) {
-                    console.log(e2);
-                }
-            });
 
 
 
@@ -110,3 +84,55 @@ $(document).ready(function() {
 
 
 });
+
+
+function drawModal(href, width, type, ext, index) {
+
+    // $.ajax({
+    //     type: 'POST',
+    //     url: href,
+    //     //  dataType: "image/" + ext,
+    //     procssData: false,
+    //     success: function(data) {
+
+            if (type == 'image') {
+                $('#popup i.fullscreen-icon').show();
+
+                href = removeGetVar(href, 'base64');
+                img = $('<div class="back" data-index="' + parseInt(index - 1) + '"><a href="#"><i class="fa fa-arrow-left"></i></a></div><div class="forward" data-index="' + parseInt(index +1) + '"><a href="#"><i class="fa fa-arrow-right"></i></a></div><a href="' + href + '" target="_blank"><img class="fade" src="'+ href + '" /></a>');
+
+                $(img).on('load',function() {
+                $('#popup .modal-body').html(img);
+                  $('#popup').modal('show');
+                });
+
+
+            } else {
+
+                $('#popup i.fullscreen-icon').hide();
+
+                var video = $('<video id="vid" src="' + href + '" controls style="display: none;"></video>' + '<i class="fa fa-spin fa-spinner loading"></i>');
+
+                $('#popup .modal-body').html(video);
+                $('#popup').modal('show');
+                //	$('#popup .modal-dialog').width();
+                $('#popup .modal-body video').on('canplaythrough', function() {
+
+                    $(this).attr('style', '');
+                    $('#popup').find('.fa-spinner').remove();
+
+                });
+
+
+
+            }
+
+
+    //     },
+    //     error: function(e, textStatus, e2) {
+    //         console.log(e2);
+    //     }
+    // });
+
+
+}
