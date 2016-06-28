@@ -131,7 +131,6 @@ class View
         $content = new Content();
         $content->Add('<div class="thumb-cell well well-sm">');
 
-        $url->base64 = 1;
 
         if ($saved) {
             $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
