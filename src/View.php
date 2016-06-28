@@ -15,7 +15,6 @@ class View
         $content->add('<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />');
         $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
         $content->add('<link rel="stylesheet" href="./css/styles.css" />');
-        $content->add('<link rel="stylesheet" href="./css/ekko-lightbox.min.css" />');
         $content->add('</head>');
         $content->add('<body>');
         $content->add('<div class="container-fluid">');
@@ -61,7 +60,6 @@ class View
         $content->add('<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>');
 
         $content->add('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>');
-        $content->add('<script src="./js/ekko-lightbox.min.js"></script>');
 
         $content->add('<script src="./js/site.js"></script>');
 
@@ -135,7 +133,6 @@ class View
         if ($saved) {
             $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
         }
-
 
         $content->Add('<a class="popup-trigger" data-gallery="gallery" data-index="'.$index.'" data-ext="'.$url->ext.'" data-type="'.$type.'" data-height="'.$height.'" data-width="'.$width.'"  data-img="'.$url->build().'">
         <img class="thumb" src="'.$url->build('thumb').'" /></a>

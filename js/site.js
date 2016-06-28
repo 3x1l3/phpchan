@@ -39,21 +39,20 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click','div.back,div.forward',function() {
+    $(document).on('click', 'div.back,div.forward', function() {
 
         var index = $(this).data('index');
 
         if (index < 0) {
-          index = $(this).closest('.gallery').children('.thumb-cell').length-1;
-          console.log(index);
-        }
-        else if (index >= $(this).closest('.gallery').children('.thumb-cell').length) {
-          index = 0;
+            index = $(this).closest('.gallery').children('.thumb-cell').length - 1;
+            console.log(index);
+        } else if (index >= $(this).closest('.gallery').children('.thumb-cell').length) {
+            index = 0;
         }
 
         var info = $(this).closest('.gallery').children('.thumb-cell').eq(index).children('a');
-        drawModal(info.data('img'),info.data('width'),info.data('type'),info.data('ext'),info.data('index'));
-$('#popup').modal('handleUpdate');
+        drawModal(info.data('img'), info.data('width'), info.data('type'), info.data('ext'), info.data('index'));
+        $('#popup').modal('handleUpdate');
     });
 
 
@@ -96,37 +95,37 @@ function drawModal(href, width, type, ext, index) {
     //     procssData: false,
     //     success: function(data) {
 
-            if (type == 'image') {
-                $('#popup i.fullscreen-icon').show();
+    if (type == 'image') {
+        $('#popup i.fullscreen-icon').show();
 
-                href = removeGetVar(href, 'base64');
-                img = $('<div class="back" data-index="' + parseInt(index - 1) + '"><a href="#"><i class="fa fa-arrow-left"></i></a></div><div class="forward" data-index="' + parseInt(index +1) + '"><a href="#"><i class="fa fa-arrow-right"></i></a></div><a href="' + href + '" target="_blank"><img class="fade" src="'+ href + '" /></a>');
+        href = removeGetVar(href, 'base64');
+        img = $('<div class="back" data-index="' + parseInt(index - 1) + '"><a href="#"><i class="fa fa-arrow-left"></i></a></div><div class="forward" data-index="' + parseInt(index + 1) + '"><a href="#"><i class="fa fa-arrow-right"></i></a></div><a href="' + href + '" target="_blank"><img class="fade" src="' + href + '" /></a>');
 
-                $(img).find('img').on('load',function() {
-                $('#popup .modal-body').html(img);
-                  $('#popup').modal('show');
-                });
-
-
-            } else {
-
-                $('#popup i.fullscreen-icon').hide();
-
-                var video = $('<video id="vid" src="' + href + '" controls style="display: none;"></video>' + '<i class="fa fa-spin fa-spinner loading"></i>');
-
-                $('#popup .modal-body').html(video);
-                $('#popup').modal('show');
-                //	$('#popup .modal-dialog').width();
-                $('#popup .modal-body video').on('canplaythrough', function() {
-
-                    $(this).attr('style', '');
-                    $('#popup').find('.fa-spinner').remove();
-
-                });
+        $(img).find('img').on('load', function() {
+            $('#popup .modal-body').html(img);
+            $('#popup').modal('show');
+        });
 
 
+    } else {
 
-            }
+        $('#popup i.fullscreen-icon').hide();
+
+        var video = $('<video id="vid" src="' + href + '" controls style="display: none;"></video>' + '<i class="fa fa-spin fa-spinner loading"></i>');
+
+        $('#popup .modal-body').html(video);
+        $('#popup').modal('show');
+        //	$('#popup .modal-dialog').width();
+        $('#popup .modal-body video').on('canplaythrough', function() {
+
+            $(this).attr('style', '');
+            $('#popup').find('.fa-spinner').remove();
+
+        });
+
+
+
+    }
 
 
     //     },

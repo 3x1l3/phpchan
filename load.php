@@ -39,8 +39,12 @@ echo '';
 
 $zip = new Zip($threadID);
 
+
+
 if ($zip->hasResource()) {
-    for ($i = 0; $i <= $zip->getNumFiles(); ++$i) {
+    $c = 0 ;
+    for ($i = 0; $i <= $zip->getNumFiles(); $i++) {
+
         $name = $zip->getNameAtIndex($i);
         $file = $zip->getFileAtIndex($i);
 
@@ -54,26 +58,29 @@ if ($zip->hasResource()) {
         $chunks = explode('.', $name);
         $extension = $chunks[1];
 
+
         if ($name != 0) {
             if ($extension != 'webm') {
-                $gif->Add($view->drawThumb($img, $width, $height, 'image'));
+                $gif->Add($view->drawThumb($img, $width, $height, 'image', false, $c));
             } else {
-                $webm->Add($view->drawThumb($img, $width, $height, 'video'));
+                $webm->Add($view->drawThumb($img, $width, $height, 'video', false, $c));
             }
+            $c++;
         }
+
     }
 }
 echo '<div class="gallery">';
 
 if (!$webm->isEmpty()) {
-    echo '<h3>WebM</h3>';
-    echo '<div>'.$webm.'</div>';
+
+    echo $webm;
 }
 
 if (!$gif->isEmpty()) {
-    echo '<h3>Other</h3>';
-    echo '<div>'.$gif;
-    echo '</div>';
+
+    echo $gif;
+
 }
 
 echo $view->blankModal();
