@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 require_once 'config.php';
 use phpFastCache\CacheManager;
 use ImageSource\ImageSource;

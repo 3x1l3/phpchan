@@ -8,7 +8,7 @@ $threadID = $_GET['t'];
 $board = $_GET['b'];
 
 $controller = new Controller();
-$view = new View();
+$view = new View($controller);
 
 echo $view->header('loaded');
 

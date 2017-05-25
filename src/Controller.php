@@ -22,6 +22,11 @@ class Controller
         }
 
         $this->hash = md5($this->board.$this->page);
+        
+        if ($_GET['theme'] == 'toggle') {
+            $this->setTheme((int)!$this->getTheme());
+        }
+        
     }
 
     public function get($url)
@@ -29,6 +34,30 @@ class Controller
         $response = file_get_contents($url);
 
         return $response;
+    }
+    
+    /**
+     * Get the theme. 0 = light 1= dark
+     * @return int
+     */
+    public function getTheme() {
+        $theme = $_SESSION['phpchan']['theme'];
+        
+        if (!$theme) {
+            return 0;
+        }
+        return $theme;
+    }
+    public function setTheme($val) {
+        $_SESSION['phpchan']['theme'] = $val;
+    }
+    /**
+     * Get the current Uri
+     */
+    public function getUrl() {
+        
+        return $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+        
     }
 
     public function curlEnabled()
