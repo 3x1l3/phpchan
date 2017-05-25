@@ -16,7 +16,7 @@ class ImageSource extends ImageSourceAbstract
 
     }
     public function getQuery() {
-        return $this->_board.'/'.$this->_tim.'.'.$this->ext;
+        return $this->_board.'/src/'.$this->_tim.'.'.$this->ext;
     }
     public function getURL()
     {
@@ -31,6 +31,6 @@ class ImageSource extends ImageSourceAbstract
 
     protected function getEndpoint()
     {
-        return 'http://i.4cdn.org/';
+        return 'https://media.8ch.net/';
     }
 }

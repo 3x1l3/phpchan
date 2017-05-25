@@ -3,8 +3,8 @@ namespace ImageSource;
 
 abstract class ImageSourceAbstract
 {
-    private $_thumbnail_endpoint = 'http://t.4cdn.org/';
-    private $_image_endpoint = 'http://i.4cdn.org/';
+    private $_thumbnail_endpoint = 'https://media.8chan.net/';
+    private $_image_endpoint = 'https://media.8chan.net/';
 
     protected $_tim;
     protected $_ext;

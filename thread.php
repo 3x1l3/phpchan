@@ -8,7 +8,7 @@ $thread = $_GET['t'];
 $threadID = $_GET['t'];
 $board = $_GET['b'];
 
-$url = 'http://a.4cdn.org/'.$board.'/thread/'.$thread.'.json';
+$url = 'https://8ch.net/'.$board.'/res/'.$thread.'.json';
 
 $controller = new Controller();
 $view = new View($controller);

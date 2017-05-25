@@ -15,7 +15,7 @@ class ThumbnailSource extends ImageSourceAbstract
     }
     public function getQuery()
     {
-        return $this->_board.'/'.$this->_tim.'s.jpg';
+        return $this->_board.'/thumb/'.$this->_tim.'.jpg';
     }
     public function getData()
     {
@@ -24,6 +24,6 @@ class ThumbnailSource extends ImageSourceAbstract
 
     protected function getEndpoint()
     {
-        return 'http://i.4cdn.org/';
+        return 'https://media.8ch.net/';
     }
 }

@@ -21,7 +21,7 @@ if (isset($board) && isset($tim)) {
     if ($type == 'thumb') {
         $thumb = new ThumbnailSource($tim, $board);
         $data = $cache->get($thumb->getQuery());
-        if ($data === null) {
+        if ($data === null || $data === false) {
             $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
@@ -29,7 +29,7 @@ if (isset($board) && isset($tim)) {
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
-        if ($data === null) {
+        if ($data === null || $data === false) {
             $data = $image->getData();
             $cache->set($image->getQuery(), $data, 3600 * 24);
         }
@@ -70,6 +70,7 @@ case 'jpg': $ctype = 'image/jpeg'; break;
 case 'webm': $ctype = 'video/webm'; break;
 default:
 }
+
 
 if ($_GET['base64'] == 1) {
     echo base64_encode($data);
