@@ -19,13 +19,14 @@ if (isset($board) && isset($tim)) {
     $cache = CacheManager::Files();
 
     if ($type == 'thumb') {
-        $thumb = new ThumbnailSource($tim, $board);
+        $thumb = new ThumbnailSource($tim, $board, $ext);
         $data = $cache->get($thumb->getQuery());
         if ($data === null || $data === false) {
             $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
-        $ext = 'jpg';
+        var_dump($thumb->getURL());
+        die();
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
