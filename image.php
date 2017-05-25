@@ -25,8 +25,7 @@ if (isset($board) && isset($tim)) {
             $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
-        var_dump($thumb->getURL());
-        die();
+   
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
