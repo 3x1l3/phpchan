@@ -146,17 +146,16 @@ class View
     public function drawThumb(ImageUrl $url, $width, $height, $type, $saved = false, $index = null)
     {
         $content = new Content();
-        $content->Add('<div class="thumb-cell well well-sm">');
+        $content->Add('<div class="thumb-cell col-md-2 col-sm-3 col-xs-6 "><a class="popup-trigger" data-gallery="gallery" data-index="' . $index . '" data-ext="' . $url->ext . '" data-type="' . $type . '" data-height="' . $height . '" data-width="' . $width . '"  data-img="' . $url->build() . '"><div class="well well-sm">'
+                . '<div style="background-image: url(' . $url->build('thumb') . ')">');
 
 
         if ($saved) {
             $content->Add('<i class="btn btn-default fa fa-floppy-o saved-icon"></i>');
         }
 
-        $content->Add('<a class="popup-trigger" data-gallery="gallery" data-index="' . $index . '" data-ext="' . $url->ext . '" data-type="' . $type . '" data-height="' . $height . '" data-width="' . $width . '"  data-img="' . $url->build() . '">
-        <img class="thumb" src="' . $url->build('thumb') . '" /></a>
-      ');
-        $content->Add('</div>');
+    
+        $content->Add('</div></div> </a></div>');
 
         return $content->build();
     }
