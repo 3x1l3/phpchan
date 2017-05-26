@@ -7,9 +7,17 @@ div.container-fluid {
 div.board {
 	overflow:auto;
 }
-div.row img.thumb {
-
-	width: 100%;
+div.board > div > div {
+    height: 200px;
+    background-size:cover;
+    background-position:center center;
+    padding: 1%;
+}
+img.thumb {
+    max-width: 100%;
+    margin: 0 auto;
+    max-height: 100px;
+    display: block;
 }
 a[data-toggle="modal"]  {
 	cursor: pointer;

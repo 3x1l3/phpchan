@@ -1,7 +1,7 @@
 function removeGetVar(queryStr, name) {
     var chunks = queryStr.split('&');
 
-    chunks.forEach(function(val, index) {
+    chunks.forEach(function (val, index) {
         var subchunk = val.split('=');
         if (subchunk[0] == name) {
             chunks.splice(index, 1);
@@ -14,10 +14,15 @@ function removeGetVar(queryStr, name) {
     return chunks.join('&');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 
-    $('button.delete-button').click(function() {
+    $('.board').matchHeight();
+
+    $('button.delete-button').click(function () {
 
         var threadID = $(this).val();
 
@@ -27,7 +32,7 @@ $(document).ready(function() {
             data: {
                 threadID: threadID
             },
-            success: function(msg) {
+            success: function (msg) {
                 if (parseInt(msg) == 1)
                     location.reload();
             }
@@ -39,7 +44,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', 'div.back,div.forward', function() {
+    $(document).on('click', 'div.back,div.forward', function () {
 
         var index = $(this).data('index');
 
@@ -57,28 +62,28 @@ $(document).ready(function() {
 
 
     $('a.popup-trigger').click(
-        function() {
+            function () {
 
 
 
-            var href = $(this).data('img');
-            var width = $(this).data('width');
-            var type = $(this).data('type');
-            var ext = $(this).data('ext');
-            var index = $(this).data('index');
+                var href = $(this).data('img');
+                var width = $(this).data('width');
+                var type = $(this).data('type');
+                var ext = $(this).data('ext');
+                var index = $(this).data('index');
 
-            if (ext == 'jpg')
-                ext = 'jpeg';
+                if (ext == 'jpg')
+                    ext = 'jpeg';
 
-            drawModal(href, width, type, ext, index);
-
-
+                drawModal(href, width, type, ext, index);
 
 
 
-        });
 
-    $('#popup').on('hide.bs.modal', function() {
+
+            });
+
+    $('#popup').on('hide.bs.modal', function () {
         $('#popup video').stop();
     });
 
@@ -101,7 +106,7 @@ function drawModal(href, width, type, ext, index) {
         href = removeGetVar(href, 'base64');
         img = $('<div class="back" data-index="' + parseInt(index - 1) + '"><a href="#"><i class="fa fa-arrow-left"></i></a></div><div class="forward" data-index="' + parseInt(index + 1) + '"><a href="#"><i class="fa fa-arrow-right"></i></a></div><a href="' + href + '" target="_blank"><img class="fade" src="' + href + '" /></a>');
 
-        $(img).find('img').on('load', function() {
+        $(img).find('img').on('load', function () {
             $('#popup .modal-body').html(img);
             $('#popup').modal('show');
         });
@@ -116,7 +121,7 @@ function drawModal(href, width, type, ext, index) {
         $('#popup .modal-body').html(video);
         $('#popup').modal('show');
         //	$('#popup .modal-dialog').width();
-        $('#popup .modal-body video').on('canplaythrough', function() {
+        $('#popup .modal-body video').on('canplaythrough', function () {
 
             $(this).attr('style', '');
             $('#popup').find('.fa-spinner').remove();
