@@ -31,16 +31,17 @@ foreach ($array->threads as $thread) {
 		$zip = new Zip();
 		$saved = $zip->threadSaved($first->no);
 
-		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm col-md-2 board">';
+		echo '<a  href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div data-toggle="tooltip" data-html="true" title="<i class=\'fa fa-file-image-o\'></i> ' . $first -> images.'<br/>' . str_replace('"', "\'", $first -> com) .'" class="col-md-2 col-sm-3 col-xs-6 board">';
 
 		if ($saved)
 			echo '<i class="btn btn-default fa fa-floppy-o"></i>';
 
-		echo '<div class="col-md-12 col-sm-2 col-xs-2"><img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" /></div>';
-		echo '<div class="col-md-10 col-sm-10 col-xs-10">' . $first -> sub . '';
+		echo '<div class="well well-sm" ><div style="background-image: url(' . $controller -> genThumnailURL($first -> tim) . ')">';
+                //. '<img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" />';
+		//echo '' . $first -> sub . '';
 		//echo '<p>' . $first -> com . '</p>';
-		echo '<br /><i class="fa fa-file-image-o"></i> ' . $first -> images;
-		echo '</div></div></a>';
+		//echo '<br /><i class="fa fa-file-image-o"></i> ' . $first -> images;
+		echo '</div></div></div></a>';
 	}
 }
 echo '</div>';
