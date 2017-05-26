@@ -15,13 +15,15 @@ a[data-toggle="modal"]  {
 	cursor: pointer;
 }
 div.thumb-cell {
-	width: 12%;
-	float: left;
-	height: 200px;
-	overflow: hidden;
-	padding: 0.25%;
-	margin: 0.25%;
-	position: relative;
+	
+	
+	
+}
+div.thumb-cell > a > div > div {
+    height: 200px;
+    background-size:cover;
+    background-position:center center;
+    padding: 1%;
 }
 div.thumb-cell > a > i.fa, div.thumb-cell .saved-icon {
 	position: absolute;
