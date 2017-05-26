@@ -1,8 +1,7 @@
 <?php
-
 require_once 'config.php';
 $controller = new Controller();
-$view = new View();
+$view = new View($controller);
 
 $cache = phpFastCache\CacheManager::Files();
 $boardsJSON = $cache->get('boards');

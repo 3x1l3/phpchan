@@ -7,7 +7,7 @@ $thread = $_GET['t'];
 $threadID = $_GET['t'];
 
 $controller = new Controller();
-$view = new View();
+$view = new View($controller);
 
 echo $view->header('loaded');
 

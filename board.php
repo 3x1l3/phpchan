@@ -5,7 +5,7 @@ require_once("config.php");
 
 $cache = CacheManager::Files();
 $controller = new Controller();
-$view = new View();
+$view = new View($controller);
 
 echo $view -> header();
 

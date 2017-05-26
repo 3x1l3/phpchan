@@ -11,7 +11,7 @@ $board = $_GET['b'];
 $url = 'http://a.4cdn.org/'.$board.'/thread/'.$thread.'.json';
 
 $controller = new Controller();
-$view = new View();
+$view = new View($controller);
 
 echo $view->header();
 
@@ -30,6 +30,7 @@ $count = 0;
 
 $gif = new Content();
 $webm = new Content();
+$other = new Content();
 
 $boards = $cache->get('boards');
 
@@ -48,10 +49,12 @@ foreach ($thread->posts as $post) {
             }
         }
 
-        if ($post->ext != '.webm') {
+        if ($post->ext == '.gif') {
             $gif->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved, $count));
-        } else {
+        } else if ($post->ext == '.webm') {
             $webm->Add($view->drawThumb($url, $post->h, $post->w, 'video', $saved, $count));
+        } else {
+          $other->Add($view->drawThumb($url, $post->h, $post->w, 'image', $saved, $count));
         }
 
         ++$count;
@@ -64,8 +67,12 @@ if (!$webm->isEmpty()) {
     echo $webm;
 }
 
+if (!$other->isEmpty()) {
+  echo $other;
+}
+
 if (!$gif->isEmpty()) {
-    echo $gif;
+  //  echo $gif;
 }
 echo $view->blankModal();
 echo $view->footer();
