@@ -60,6 +60,7 @@ class View
         $content->add('<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>');
 
         $content->add('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>');
+        $content->add('<script src="./js/matchheight.js"></script>');
 
         $content->add('<script src="./js/site.js"></script>');
 

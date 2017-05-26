@@ -21,28 +21,29 @@ $boards = $cache->get('boards');
 
 echo $view->drawBreadcrumb(json_decode($boards)->boards);
 echo $view->pagination($_GET['p'],$_GET['b']);
-
+echo '<div class="grid row">';
 foreach ($array->threads as $thread) {
 
 	$first = $thread -> posts[0];
 
 	if ($first -> closed != 1) {
-
+		
 		$zip = new Zip();
 		$saved = $zip->threadSaved($first->no);
 
-		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm row board">';
+		echo '<a href="thread.php?t=' . $first -> no . '&b=' . $_GET['b'] . '"><div class="well well-sm col-md-2 board">';
 
 		if ($saved)
 			echo '<i class="btn btn-default fa fa-floppy-o"></i>';
 
-		echo '<div class="col-md-2 col-sm-2 col-xs-2"><img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" /></div>';
-		echo '<div class="col-md-10 col-sm-10 col-xs-10"><h3>' . $first -> sub . '</h3>';
-		echo '<p>' . $first -> com . '</p>';
+		echo '<div class="col-md-12 col-sm-2 col-xs-2"><img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" /></div>';
+		echo '<div class="col-md-10 col-sm-10 col-xs-10">' . $first -> sub . '';
+		//echo '<p>' . $first -> com . '</p>';
 		echo '<br /><i class="fa fa-file-image-o"></i> ' . $first -> images;
 		echo '</div></div></a>';
 	}
 }
-
+echo '</div>';
 
 echo $view->pagination($_GET['p'],$_GET['b']);
+echo $view->footer();

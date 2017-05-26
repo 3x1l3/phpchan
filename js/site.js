@@ -17,6 +17,8 @@ function removeGetVar(queryStr, name) {
 $(document).ready(function() {
 
 
+    $('.board').matchHeight();
+
     $('button.delete-button').click(function() {
 
         var threadID = $(this).val();

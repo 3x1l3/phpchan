@@ -38,13 +38,14 @@ foreach ($chunks as $chunk) {
 }
 $boards->add('</table>');
 $boards->add('<h2>NSFW</h2>');
-$boards->add('<table  class="boards table table-bordered table-condensed">');
+$boards->add('<table  class=" table table-bordered table-condensed">');
 $chunks = array_chunk($nsfw, 5);
 
 foreach ($chunks as $chunk) {
     $boards->add('<tr>');
 
     foreach ($chunk as $board) {
+
         $boards->add('<td class=""><a href="board.php?b='.$board->board.'">'.$board->title.'</a></td>');
     }
     $boards->add('</tr>');

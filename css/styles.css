@@ -7,7 +7,7 @@ div.container-fluid {
 div.board {
 	overflow:auto;
 }
-div.row img.thumb {
+img.thumb {
 
 	width: 100%;
 }
