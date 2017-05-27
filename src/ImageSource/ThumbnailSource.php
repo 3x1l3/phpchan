@@ -1,6 +1,6 @@
 <?php
 
-namespace ImageSource;
+namespace PHPChan\ImageSource;
 
 class ThumbnailSource extends ImageSourceAbstract
 {

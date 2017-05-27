@@ -1,5 +1,8 @@
 <?php
+use PHPChan\Zip;
 use phpFastCache\CacheManager;
+use PHPChan\Controller;
+use PHPChan\View;
 
 require_once("config.php");
 
@@ -19,7 +22,9 @@ $thumbs = $controller -> getThumbnails($json);
 
 $boards = $cache->get('boards');
 
-echo $view->drawBreadcrumb(json_decode($boards)->boards);
+$boardModel = new \PHPChan\Boards\BoardsModel($controller);
+
+echo $view->drawBreadcrumb($boardModel->getBoard($_GET['b'])->shortTitle(), $boardModel->getAllBoards());
 echo $view->pagination($_GET['p'],$_GET['b']);
 
 foreach ($array->threads as $thread) {

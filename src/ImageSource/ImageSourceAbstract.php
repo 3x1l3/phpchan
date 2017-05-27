@@ -1,5 +1,5 @@
 <?php
-namespace ImageSource;
+namespace PHPChan\ImageSource;
 
 abstract class ImageSourceAbstract
 {

@@ -4,4 +4,5 @@
 /tags
 /saved/
 /*.db
-/nbproject/private/
+/nbproject
+/.idea

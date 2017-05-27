@@ -1,165 +1,175 @@
 
 div.container-fluid {
-	margin: 50px auto;
-	width: 90%;
+    margin: 50px auto;
+    width: 90%;
 
 }
+
 div.board {
-	overflow:auto;
+    overflow: auto;
 }
+
 div.board > div > div {
     height: 200px;
-    background-size:cover;
-    background-position:center center;
+    background-size: cover;
+    background-position: center center;
     padding: 1%;
 }
+
 img.thumb {
     max-width: 100%;
     margin: 0 auto;
     max-height: 100px;
     display: block;
 }
-a[data-toggle="modal"]  {
-	cursor: pointer;
+
+a[data-toggle="modal"] {
+    cursor: pointer;
 }
+
 div.thumb-cell {
-	
-	
-	
+
 }
+
 div.thumb-cell > a > div > div {
     height: 200px;
-    background-size:cover;
-    background-position:center center;
+    background-size: cover;
+    background-position: center center;
     padding: 1%;
 }
+
 div.thumb-cell > a > i.fa, div.thumb-cell .saved-icon {
-	position: absolute;
-	top: 6px;
-	right: 6px;
-	font-size: 15px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 15px;
 }
 
-
 div.thumb-cell img.thumb {
-	width: 100%;
+    width: 100%;
 }
 
 ul.pagination {
-	width: 100%;
+    width: 100%;
 }
-
 
 table.boards td a {
-	width: 100%;
-display:block;
-padding: 3px;
+    width: 100%;
+    display: block;
 }
+
 table.boards td {
-		padding: 0;
+    padding: 0;
 }
 
 video {
-	max-width: 1000px;
+    max-width: 1000px;
 }
-
 
 .modal-dialog {
-	max-width: 95%;
-	min-width: 100px;
-        z-index: 1051;
+    max-width: 95%;
+    min-width: 100px;
+    z-index: 1051;
 }
+
 #popup .modal-content {
-text-align:center;
+    text-align: center;
 
 }
+
 #popup .modal-content i.fullscreen-icon {
 
-	position: absolute;
-	left: calc(50% - 50px);
-	top: calc(50% - 50px);
-	font-size: 100px;
-	z-index:0;
+    position: absolute;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+    font-size: 100px;
+    z-index: 0;
 
 }
+
 #popup .modal-content div.back {
-	position: absolute;
-	font-size: 50px;
-	z-index: 2;
-	width: 50px;
-	text-align:center;
-	top:15px;
-	bottom: 15px;
+    position: absolute;
+    font-size: 50px;
+    z-index: 2;
+    width: 50px;
+    text-align: center;
+    top: 15px;
+    bottom: 15px;
 }
+
 #popup .modal-content div.back a {
-	height: 100%;
-	display: block;
-	color:#FFF;
-	opacity: 0.5;
+    height: 100%;
+    display: block;
+    color: #FFF;
+    opacity: 0.5;
 }
+
 #popup .modal-content div.back a:hover {
-	transition: 0.5s;
-	background-color:#000;
-	opacity: 0.5;
+    transition: 0.5s;
+    background-color: #000;
+    opacity: 0.5;
 }
+
 #popup .modal-content div.back i {
-	position: absolute;
-	top: calc(50% - 25px);
-	left: 3px;
+    position: absolute;
+    top: calc(50% - 25px);
+    left: 3px;
 }
 
 #popup .modal-content div.forward {
-	position: absolute;
-	font-size: 50px;
-	z-index: 2;
-	width: 50px;
-	right: 15px;
-	top:15px;
-	bottom: 15px;
+    position: absolute;
+    font-size: 50px;
+    z-index: 2;
+    width: 50px;
+    right: 15px;
+    top: 15px;
+    bottom: 15px;
 }
+
 #popup .modal-content div.forward a {
-	height: 100%;
-	display: block;
-	color:#FFF;
-	opacity: 0.5;
+    height: 100%;
+    display: block;
+    color: #FFF;
+    opacity: 0.5;
 }
+
 #popup .modal-content div.forward a:hover {
-	transition: 0.5s;
-	background-color:#000;
-	opacity: 0.5;
+    transition: 0.5s;
+    background-color: #000;
+    opacity: 0.5;
 }
+
 #popup .modal-content div.forward i {
-	position: absolute;
-	top: calc(50% - 25px);
-	right: 3px;
+    position: absolute;
+    top: calc(50% - 25px);
+    right: 3px;
 }
 
 #popup i.loading {
-font-size: 100px;
+    font-size: 100px;
 
 }
 
 #popup .modal-body img.fade:hover {
-	/*transition: 0.5s;
-	opacity: 0.1;*/
+    /*transition: 0.5s;
+    opacity: 0.1;*/
 }
-
 
 #popup .modal-body img {
-		max-width: 100%;
-		min-width: auto;
-		margin: 0 auto;
-		display: block;
-opacity:1;
-
-
+    max-width: 100%;
+    min-width: auto;
+    margin: 0 auto;
+    display: block;
+    opacity: 1;
 
 }
+
 #popup .modal-body video {
-max-width: 100%;
+    max-width: 100%;
 
 }
+
 .popup-trigger {
-	cursor: pointer;
+    cursor: pointer;
 
 }

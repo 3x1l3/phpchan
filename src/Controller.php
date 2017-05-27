@@ -1,5 +1,7 @@
 <?php
 
+namespace PHPChan;
+
 use phpFastCache\CacheManager;
 
 class Controller
@@ -11,6 +13,7 @@ class Controller
 
     private $thumbnail_endpoint = 'image.php?board=[board]&tim=[tim]&type=thumb';
     private $image_endpoint = 'image.php?board=[board]&tim=[tim]&ext=[ext]&type=full';
+    private $endpoints = ['boards' => 'https://8ch.net/boards.json', 'threads' => 'https://8ch.net/[board]/threads.json'];
 
     public function __construct()
     {
@@ -21,43 +24,60 @@ class Controller
             $this->page = 1;
         }
 
-        $this->hash = md5($this->board.$this->page);
-        
+        $this->hash = md5($this->board . $this->page);
+
         if ($_GET['theme'] == 'toggle') {
             $this->setTheme((int)!$this->getTheme());
         }
-        
+
     }
 
     public function get($url)
     {
         $response = file_get_contents($url);
-
         return $response;
     }
-    
+
+    public function getCache()
+    {
+        return CacheManager::Files();
+
+    }
+
+    public function getEndpoint($key)
+    {
+        if (isset($this->endpoints[$key])) {
+            return $this->endpoints[$key];
+        }
+    }
+
     /**
      * Get the theme. 0 = light 1= dark
      * @return int
      */
-    public function getTheme() {
+    public function getTheme()
+    {
         $theme = $_SESSION['phpchan']['theme'];
-        
+
         if (!$theme) {
             return 0;
         }
         return $theme;
     }
-    public function setTheme($val) {
+
+    public function setTheme($val)
+    {
         $_SESSION['phpchan']['theme'] = $val;
     }
+
     /**
      * Get the current Uri
      */
-    public function getUrl() {
-        
-        return $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-        
+    public function getUrl()
+    {
+
+        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
     }
 
     public function curlEnabled()
@@ -71,7 +91,7 @@ class Controller
             $page = $this->page;
         }
 
-        return 'http://a.4cdn.org/'.$this->board.'/'.$page.'.json';
+        return 'http://a.4cdn.org/' . $this->board . '/' . $page . '.json';
     }
 
     public function exec()
@@ -85,10 +105,10 @@ class Controller
 
         $result = array();
         for ($i = 1; $i <= 10; ++$i) {
-            $result[$i] = $cache->get($this->board.'-'.$i);
+            $result[$i] = $cache->get($this->board . '-' . $i);
             if ($result[$i] === null || $_GET['resetcache'] == 1) {
                 $result[$i] = $this->get($this->buildURL($i));
-                $cache->set($this->board.'-'.$i, $result[$i], 600);
+                $cache->set($this->board . '-' . $i, $result[$i], 600);
             }
         }
 

@@ -1,9 +1,8 @@
 <?php
-
 require_once 'config.php';
+use PHPChan\ImageSource\ImageSource;
+use PHPChan\ImageSource\ThumbnailSource;
 use phpFastCache\CacheManager;
-use ImageSource\ImageSource;
-use ImageSource\ThumbnailSource;
 
 $board = $_GET['board'];
 $tim = $_GET['tim'];
@@ -25,7 +24,7 @@ if (isset($board) && isset($tim)) {
             $data = $thumb->getData();
             $cache->set($thumb->getQuery(), $data, 3600 * 24);
         }
-   
+
     } else {
         $image = new ImageSource($tim, $board, $ext);
         $data = $cache->get($image->getQuery());
@@ -43,11 +42,11 @@ if (isset($board) && isset($tim)) {
    * @var ZipArchive
    */
     $zip = new ZipArchive();
-    $res = $zip->open('./saved/'.$threadID.'.zip');
+    $res = $zip->open('./saved/' . $threadID . '.zip');
 
     if ($res) {
         if ($type == 'thumb') {
-            $data = $zip->getFromName('thumbs/'.$chunks[0].'.jpg');
+            $data = $zip->getFromName('thumbs/' . $chunks[0] . '.jpg');
             $ext = 'jpg';
 
             //::if no thumbnail file was found use original.
@@ -63,19 +62,26 @@ if (isset($board) && isset($tim)) {
 }
 
 switch ($ext) {
-case 'gif': $ctype = 'image/gif'; break;
-case 'png': $ctype = 'image/png'; break;
-case 'jpeg':
-case 'jpg': $ctype = 'image/jpeg'; break;
-case 'webm': $ctype = 'video/webm'; break;
-default:
+    case 'gif':
+        $ctype = 'image/gif';
+        break;
+    case 'png':
+        $ctype = 'image/png';
+        break;
+    case 'jpeg':
+    case 'jpg':
+        $ctype = 'image/jpeg';
+        break;
+    case 'webm':
+        $ctype = 'video/webm';
+        break;
+    default:
 }
-
 
 if ($_GET['base64'] == 1) {
     echo base64_encode($data);
 } else {
-    header('Content-type: '.$ctype);
-    echo  $data;
+    header('Content-type: ' . $ctype);
+    echo $data;
 }
-    exit();
+exit();

@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-namespace Utility;
+namespace PHPChan\Utility;
 
 class Url
 {

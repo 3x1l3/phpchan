@@ -1,4 +1,5 @@
 <?php
+namespace PHPChan;
 
 class View
 {
@@ -17,7 +18,7 @@ class View
 
     public function header($active = 'home')
     {
-        $content = new \Content();
+        $content = new Content();
         $content->add('<!DOCTYPE html>');
         $content->add('<html><head><title>PHPChan</title>');
         $content->add('<meta name="viewport" content="width=device-width,initial-scale=1.0">');
@@ -34,7 +35,7 @@ class View
         $content->add('<div class="container-fluid">');
         $content->add('<h1>PHPChan</h1>');
 
-        $url = \Utility\Url::createFromGlobal();
+        $url = Utility\Url::createFromGlobal();
 
         $content->add('<ul class="nav nav-tabs">
      <li role="presentation" class="' . ($active == 'home' ? 'active' : '') . '"><a href="./">Home</a></li>
@@ -93,7 +94,7 @@ class View
         $Out .= '<a href=".">Boards</a> ';
         if ($boards !== null) {
             foreach ($boards as $board) {
-                if ($board->board == $_GET['b']) {
+                if ($board->shortTitle() == $current_board) {
                     $Out .= '<i class="fa fa-angle-double-right"></i> <a href="board.php?b=' . $current_board . '">' . $board->title . '</a>';
                 }
             }

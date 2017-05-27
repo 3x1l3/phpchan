@@ -1,4 +1,5 @@
 <?php
+namespace PHPChan;
 
 class Content {
 

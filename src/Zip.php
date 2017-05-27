@@ -1,4 +1,7 @@
 <?php
+namespace PHPChan;
+
+use ZipArchive;
 
 class Zip
 {
