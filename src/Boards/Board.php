@@ -2,7 +2,7 @@
 
 namespace PHPChan\Boards;
 
-class BoardModel
+class Board
 {
     private $data;
 

@@ -1,5 +1,9 @@
 <?php
 
+use PHPChan\Content;
+use PHPChan\Controller;
+use PHPChan\ImageUrl;
+use PHPChan\View;
 use phpFastCache\CacheManager;
 
 require_once 'config.php';

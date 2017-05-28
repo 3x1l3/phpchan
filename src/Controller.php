@@ -13,7 +13,11 @@ class Controller
 
     private $thumbnail_endpoint = 'image.php?board=[board]&tim=[tim]&type=thumb';
     private $image_endpoint = 'image.php?board=[board]&tim=[tim]&ext=[ext]&type=full';
-    private $endpoints = ['boards' => 'https://8ch.net/boards.json', 'threads' => 'https://8ch.net/[board]/threads.json'];
+    private $endpoints = [
+        'boards' => 'https://8ch.net/boards.json',
+        'threads' => 'https://8ch.net/[board]/threads.json',
+        'posts' => 'https://8ch.net/[board]/res/[thread].json '
+    ];
 
     public function __construct()
     {
@@ -32,6 +36,16 @@ class Controller
 
     }
 
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    public function getBoard()
+    {
+        return $this->board;
+    }
+
     public function get($url)
     {
         $response = file_get_contents($url);
@@ -42,6 +56,9 @@ class Controller
     {
         return CacheManager::Files();
 
+    }
+    public function nocache() {
+        return isset($_GET['nocache']) || isset($_COOKIE['nocache']);
     }
 
     public function getEndpoint($key)

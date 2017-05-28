@@ -23,14 +23,18 @@ $thumbs = $controller -> getThumbnails($json);
 $boards = $cache->get('boards');
 
 $boardModel = new \PHPChan\Boards\BoardsModel($controller);
+$threads = $boardModel->getThreads($boardModel->getBoard($_GET['b']));
+$postModel = new \PHPChan\Posts\PostsModel($controller);
 
-echo $view->drawBreadcrumb($boardModel->getBoard($_GET['b'])->shortTitle(), $boardModel->getAllBoards());
+echo $view->drawBreadcrumb($boardModel->getBoard($controller->getBoard())->shortTitle(), $boardModel->getAllBoards());
 echo $view->pagination($_GET['p'],$_GET['b']);
 
-foreach ($array->threads as $thread) {
+foreach ($threads as $thread) {
 
-	$first = $thread -> posts[0];
 
+	$first = $postModel->getPosts($thread)->first();
+	var_dump($first);
+	die();
 	if ($first -> closed != 1) {
 
 		$zip = new Zip();

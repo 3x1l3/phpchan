@@ -3,6 +3,7 @@
 namespace PHPChan\Boards;
 
 use PHPChan\Controller;
+use PHPChan\Threads\ThreadsModel;
 
 class BoardsModel
 {
@@ -22,7 +23,7 @@ class BoardsModel
         $objs = json_decode($boardsJSON);
 
         foreach ($objs as $obj) {
-            $this->boards[] = new BoardModel($obj);
+            $this->boards[] = new Board($obj);
         }
 
     }
@@ -61,9 +62,11 @@ class BoardsModel
         return new \stdClass();
     }
 
-    public function getThreads(BoardModel $board)
+    public function getThreads(Board $board)
     {
-        return str_replace('[board]', $board->shortTitle(), $this->controller->getEndpoint('threads'))  ;
+        $threadmodel = new ThreadsModel($this->controller);
+        return $threadmodel->getThreads($board);
+
     }
 
 
