@@ -32,6 +32,9 @@ class PostCollection implements ArrayAccess, SeekableIterator, Countable, Serial
         }
     }
 
+    /**
+     * @return Post
+     */
     public function first()
     {
         $this->rewind();

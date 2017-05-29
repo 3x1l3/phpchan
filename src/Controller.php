@@ -16,7 +16,13 @@ class Controller
     private $endpoints = [
         'boards' => 'https://8ch.net/boards.json',
         'threads' => 'https://8ch.net/[board]/threads.json',
-        'posts' => 'https://8ch.net/[board]/res/[thread].json '
+        'posts' => 'https://8ch.net/[board]/res/[thread].json ',
+        'images' => [
+            'https://media.8ch.net/[board]/thumb/[tim].[ext]',
+            'https://media.8ch.net/file_store/thumb/[tim].[ext]',
+            'https://media.8ch.net/file_store/thumb/[tim].jpg',
+            'https://media.8ch.net/[board]/thumb/[tim].jpg'
+        ]
     ];
 
     public function __construct()

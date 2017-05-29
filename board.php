@@ -16,12 +16,6 @@ if (!isset($_GET['p']))
 	$_GET['p'] = 1;
 
 
-$json = $controller -> multiEx();
-$array = json_decode($json);
-$thumbs = $controller -> getThumbnails($json);
-
-$boards = $cache->get('boards');
-
 $boardModel = new \PHPChan\Boards\BoardsModel($controller);
 $threads = $boardModel->getThreads($boardModel->getBoard($_GET['b']));
 $postModel = new \PHPChan\Posts\PostsModel($controller);
@@ -30,11 +24,7 @@ echo $view->drawBreadcrumb($boardModel->getBoard($controller->getBoard())->short
 echo $view->pagination($_GET['p'],$_GET['b']);
 
 foreach ($threads as $thread) {
-
-
 	$first = $postModel->getPosts($thread)->first();
-	var_dump($first);
-	die();
 	if ($first -> closed != 1) {
 
 		$zip = new Zip();
@@ -44,8 +34,8 @@ foreach ($threads as $thread) {
 
 		if ($saved)
 			echo '<i class="btn btn-default fa fa-floppy-o"></i>';
-
-		echo '<div class="well well-sm" ><div style="background-image: url(' . $controller -> genThumnailURL($first -> tim) . ')">';
+        $thumb = new \PHPChan\ImageSource\ThumbnailSource($controller);
+		echo '<div class="well well-sm" ><div style="background-image: url(' . $thumb->getUrl($first). ')">';
                 //. '<img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" />';
 		//echo '' . $first -> sub . '';
 		//echo '<p>' . $first -> com . '</p>';

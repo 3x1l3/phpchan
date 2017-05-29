@@ -2,36 +2,35 @@
 
 namespace PHPChan\ImageSource;
 
-class ThumbnailSource extends ImageSourceAbstract
+use Curl\Curl;
+use PHPChan\Controller;
+use PHPChan\Posts\Post;
+
+class ThumbnailSource
 {
-
-    public function __construct($tim, $board, $ext = 'jpg')
+    private $controller;
+    public function __construct(Controller $controller)
     {
-        $this->_tim = $tim;
-        $this->_board = $board;
-        $this->_ext = $ext;
+        $this->controller = $controller;
     }
 
-    public function getURL()
-    {
-        return $this->getEndpoint() . $this->getQuery();
-    }
+    public function getUrl(Post $post) {
+        $curl = new Curl();
 
-    public function getQuery($alt = false)
-    {
-        return ($alt ? 'file_store' : $this->_board) . '/thumb/' . $this->_tim . '.'.$this->_ext;
-    }
+        $endpoints = $this->controller->getEndpoint('images');
 
-    public function getData()
-    {
-        $data = file_get_contents($this->getURL());
-        if (!$data) {
-            return file_get_contents($this->getEndpoint() . $this->getQuery(true));
+        foreach ($endpoints as $endpoint) {
+            $endpoint = str_replace('[board]',$post->getParent()->getParent()->shortTitle(), $endpoint);
+            $endpoint = str_replace('[tim]',$post->tim, $endpoint);
+            $endpoint = str_replace('[ext]',$post->getExt(), $endpoint);
+
+            $curl->get($endpoint);
+            if ($curl->http_status_code == 200)
+                return $endpoint;
         }
+
+
     }
 
-    protected function getEndpoint()
-    {
-        return 'https://media.8ch.net/';
-    }
+
 }

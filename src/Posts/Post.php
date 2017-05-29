@@ -26,9 +26,16 @@ class Post
         $this->parent = $thread;
     }
 
+    /**
+     * @return Thread
+     */
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function getExt() {
+        return str_replace('.', '', $this->ext);
     }
 
     /**

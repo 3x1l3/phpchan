@@ -35,18 +35,21 @@ class PostsModel
     public function getPosts(Thread $thread)
     {
         $postsJSON = $this->controller->getCache()->get('posts-' . $thread->getID());
-        if ($postsJSON === null || $_GET['nocache'] == 1 || $_COOKIE['nocache'] == 1) {
+        if ($postsJSON === null || $this->controller->nocache()) {
             $postsJSON = $this->controller->get($this->getEndpoint($thread));
             $this->controller->getCache()->set('posts-' . $thread->getID(), $postsJSON, 3600 * 24);
         }
+
         $objs = json_decode($postsJSON);
         $collection = new PostCollection();
-        $collection->fromStdClass($objs, $thread);
+        if ($objs)
+            $collection->fromStdClass($objs, $thread);
 
         return $collection;
     }
 
-    public function getFirstPost(Thread $thread) {
+    public function getFirstPost(Thread $thread)
+    {
 
     }
 }

@@ -26,6 +26,9 @@ class Thread
         $this->parentBoard = $board;
     }
 
+    /**
+     * @return Board
+     */
     public function getParent()
     {
         return $this->parentBoard;
