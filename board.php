@@ -35,7 +35,7 @@ foreach ($threads as $thread) {
 		if ($saved)
 			echo '<i class="btn btn-default fa fa-floppy-o"></i>';
         $thumb = new \PHPChan\ImageSource\ThumbnailSource($controller);
-		echo '<div class="well well-sm" ><div style="background-image: url(' . $thumb->getUrl($first). ')">';
+		echo '<div class="well well-sm" ><div style="background-image: url(' . $postModel->getThumbEP($first->getParent()->getParent()->shortTitle(), $first->tim, $first->getExt()) . ')">';
                 //. '<img class="thumb" src="' . $controller -> genThumnailURL($first -> tim) . '" />';
 		//echo '' . $first -> sub . '';
 		//echo '<p>' . $first -> com . '</p>';

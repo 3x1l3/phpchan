@@ -13,16 +13,17 @@ $threadID = $_GET['threadID'];
 $filename = $_GET['filename'];
 
 $type = isset($_GET['type']) ? $_GET['type'] : null; //::Thumb or full
-
+$controller = new \PHPChan\Controller();
 if (isset($board) && isset($tim)) {
     $cache = CacheManager::Files();
 
     if ($type == 'thumb') {
-        $thumb = new ThumbnailSource($tim, $board, $ext);
-        $data = $cache->get($thumb->getQuery());
+        $thumb = new ThumbnailSource($controller);
+        //$url = $thumb->get($board, $tim, $ext);
+        $data = $cache->get(md5($board.$tim.$ext));
         if ($data === null || $data === false) {
-            $data = $thumb->getData();
-            $cache->set($thumb->getQuery(), $data, 3600 * 24);
+            $data = $thumb->get($board, $tim, $ext);
+            $cache->set(md5($board.$tim.$ext), $data, 3600 * 24);
         }
 
     } else {

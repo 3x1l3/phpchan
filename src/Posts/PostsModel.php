@@ -32,6 +32,16 @@ class PostsModel
         return $url;
     }
 
+    public function getThumbEP($board, $tim, $ext)
+    {
+        $url = $this->controller->thumbnail_endpoint;
+        $url = str_replace('[board]', $board, $url);
+        $url = str_replace('[tim]', $tim, $url);
+        $url = str_replace('[ext]', $ext, $url);
+
+        return $url;
+    }
+
     public function getPosts(Thread $thread)
     {
         $postsJSON = $this->controller->getCache()->get('posts-' . $thread->getID());

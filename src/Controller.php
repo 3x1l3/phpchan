@@ -11,7 +11,7 @@ class Controller
 
     private $hash;
 
-    private $thumbnail_endpoint = 'image.php?board=[board]&tim=[tim]&type=thumb';
+    public $thumbnail_endpoint = 'image.php?board=[board]&tim=[tim]&type=thumb&ext=[ext]';
     private $image_endpoint = 'image.php?board=[board]&tim=[tim]&ext=[ext]&type=full';
     private $endpoints = [
         'boards' => 'https://8ch.net/boards.json',

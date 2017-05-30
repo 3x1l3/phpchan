@@ -14,6 +14,7 @@ class Post
         $this->data = $data;
     }
 
+
     public function __get($name)
     {
         if (isset($this->data->$name)) {
