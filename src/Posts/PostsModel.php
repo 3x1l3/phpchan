@@ -48,6 +48,8 @@ class PostsModel
         if ($postsJSON === null || $this->controller->nocache()) {
             $postsJSON = $this->controller->get($this->getEndpoint($thread));
             $this->controller->getCache()->set('posts-' . $thread->getID(), $postsJSON, 3600 * 24);
+            var_dump($postsJSON);
+
         }
 
         $objs = json_decode($postsJSON);

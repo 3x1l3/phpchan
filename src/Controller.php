@@ -64,7 +64,7 @@ class Controller
 
     }
     public function nocache() {
-        return isset($_GET['nocache']) || isset($_COOKIE['nocache']);
+        return $_GET['nocache'] == 1 || $_COOKIE['nocache'] == 1;
     }
 
     public function getEndpoint($key)
