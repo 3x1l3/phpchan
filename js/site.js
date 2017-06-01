@@ -17,10 +17,9 @@ function removeGetVar(queryStr, name) {
 $(document).ready(function () {
 
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     })
 
-    $('.board').matchHeight();
 
     $('button.delete-button').click(function () {
 

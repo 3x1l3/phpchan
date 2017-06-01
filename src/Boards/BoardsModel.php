@@ -62,10 +62,10 @@ class BoardsModel
         return new \stdClass();
     }
 
-    public function getThreads(Board $board)
+    public function getThreads(Board $board, $page = 1)
     {
         $threadmodel = new ThreadsModel($this->controller);
-        return $threadmodel->getThreads($board);
+        return $threadmodel->getThreads($board, $page);
 
     }
 

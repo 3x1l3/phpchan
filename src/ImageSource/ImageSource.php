@@ -1,36 +1,37 @@
 <?php
+
 namespace PHPChan\ImageSource;
 
 
-class ImageSource extends ImageSourceAbstract
+use Curl\Curl;
+
+class ImageSource
 {
+    private $controller;
 
-    public function __construct($tim, $board, $ext) {
-      $this->_board = $board;
-      $this->_tim = $tim;
-      if (substr($ext, 0,1) == '.') {
-        $this->ext = substr($ext, 1, strlen($ext));
-      } else {
-        $this->ext = $ext;
-      }
-
-    }
-    public function getQuery() {
-        return $this->_board.'/src/'.$this->_tim.'.'.$this->ext;
-    }
-    public function getURL()
+    public function __construct($controller)
     {
+        $this->controller = $controller;
 
-        return $this->getEndpoint().$this->getQuery();
     }
 
-    public function getData()
+    public function get($board, $tim, $ext)
     {
-        return file_get_contents($this->getURL());
-    }
+        $curl = new Curl();
 
-    protected function getEndpoint()
-    {
-        return 'https://media.8ch.net/';
+        $endpoints = $this->controller->getEndpoint('images');
+
+        foreach ($endpoints as $endpoint) {
+            $endpoint = str_replace('[board]', $board, $endpoint);
+            $endpoint = str_replace('[tim]', $tim, $endpoint);
+            $endpoint = str_replace('[ext]', $ext, $endpoint);
+
+            $curl->get($endpoint);
+            if ($curl->http_status_code == 200) {
+                return file_get_contents($endpoint);
+            }
+        }
+
+
     }
 }

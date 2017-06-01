@@ -19,7 +19,7 @@ class ThumbnailSource
     {
         $curl = new Curl();
 
-        $endpoints = $this->controller->getEndpoint('images');
+        $endpoints = $this->controller->getEndpoint('thumbs');
 
         foreach ($endpoints as $endpoint) {
             $endpoint = str_replace('[board]', $board, $endpoint);

@@ -7,6 +7,7 @@ use phpFastCache\CacheManager;
 $board = $_GET['board'];
 $tim = $_GET['tim'];
 $ext = $_GET['ext'];
+$controller = new \PHPChan\Controller();
 
 $threadID = $_GET['threadID'];
 
@@ -16,22 +17,24 @@ $type = isset($_GET['type']) ? $_GET['type'] : null; //::Thumb or full
 $controller = new \PHPChan\Controller();
 if (isset($board) && isset($tim)) {
     $cache = CacheManager::Files();
+    $hash = md5($board.$tim.$ext.$type);
 
     if ($type == 'thumb') {
         $thumb = new ThumbnailSource($controller);
         //$url = $thumb->get($board, $tim, $ext);
-        $data = $cache->get(md5($board.$tim.$ext));
-        if ($data === null || $data === false) {
+        $data = $cache->get($hash);
+        if ($data === null || $data === false || $controller->nocache()) {
             $data = $thumb->get($board, $tim, $ext);
-            $cache->set(md5($board.$tim.$ext), $data, 3600 * 24);
+            $cache->set($hash, $data, 3600 * 24);
         }
 
     } else {
-        $image = new ImageSource($tim, $board, $ext);
-        $data = $cache->get($image->getQuery());
-        if ($data === null || $data === false) {
-            $data = $image->getData();
-            $cache->set($image->getQuery(), $data, 3600 * 24);
+        $image = new ImageSource($controller);
+        $data = $cache->get($hash);
+        if ($data === null || $data === false || $controller->nocache()) {
+            $data = $image->get($board,$tim,$ext);
+            $cache->set($hash, $data, 3600 * 24);
+
         }
     }
 } elseif (isset($filename) && isset($threadID)) {

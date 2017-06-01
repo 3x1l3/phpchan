@@ -37,8 +37,9 @@ $webm = new Content();
 $other = new Content();
 
 $boards = $cache->get('boards');
+$boardModel = new \PHPChan\Boards\BoardsModel($controller);
 
-echo $view->drawBreadcrumb($board, json_decode($boards)->boards, $threadID);
+echo $view->drawBreadcrumb($boardModel->getBoard($controller->getBoard())->shortTitle(), $boardModel->getAllBoards(), $_GET['t']);
 echo '';
 foreach ($thread->posts as $post) {
     if ($post->filename) {
