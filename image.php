@@ -34,8 +34,8 @@ if (isset($board) && isset($tim)) {
         if ($data === null || $data === false || $controller->nocache()) {
             $data = $image->get($board,$tim,$ext);
             $cache->set($hash, $data, 3600 * 24);
-
         }
+
     }
 } elseif (isset($filename) && isset($threadID)) {
     $chunks = explode('.', $filename);

@@ -27,7 +27,9 @@ class Controller
             'http://media.8ch.net/[board]/[tim].[ext]',
             'http://media.8ch.net/file_store/[tim].[ext]',
             'http://media.8ch.net/file_store/[tim].jpg',
-            'http://media.8ch.net/[board]/[tim].jpg'
+            'http://media.8ch.net/[board]/[tim].jpg',
+            'http://media.8ch.net/[board]/src/[tim].[ext]',
+            'http://media.8ch.net/[board]/src/[tim].jpg'
         ]
     ];
 
