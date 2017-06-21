@@ -20,7 +20,7 @@ class PostsView
 
     public function drawThreadLink(Post $first, $postModel)
     {
-        $out = '<a  href="thread.php?t=' . $first->no . '&b=' . $_GET['b'] . '"><div data-toggle="tooltip" data-html="true" title="<i class=\'fa fa-file-image-o\'></i> ' . $first->images . '<br/>' . str_replace('"', "\'", $first->com) . '" class="col-md-2 col-sm-3 col-xs-6 board">';
+        $out = '<a  href="thread.php?t=' . $first->no . '&b=' . $_GET['b'] . '"><div data-toggle="tooltip" data-html="true" title="<i class=\'fa fa-file-image-o\'></i> ' . $first->images . '<br/>' . str_replace('"', "\'", $first->com) . '" class="col-md-2 col-sm-3 col-xs-12 board">';
 
         if ($saved)
             echo '<i class="btn btn-default fa fa-floppy-o"></i>';

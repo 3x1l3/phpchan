@@ -8,7 +8,7 @@ class BoardsView
     public function drawTable(array $boards, $cols = 5)
     {
         $out = '';
-        $out .= '<table  class="table table-bordered table-condensed">';
+        $out .= '<div class="table-responsive"><table  class="table table-bordered table-condensed">';
         $chunks = array_chunk($boards, $cols);
         foreach ($chunks as $chunk) {
             $out .= '<tr>';
@@ -18,7 +18,7 @@ class BoardsView
             }
             $out .= '</tr>';
         }
-        $out .= '</table>';
+        $out .= '</table></div>';
 
         return $out;
     }

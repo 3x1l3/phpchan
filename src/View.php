@@ -29,7 +29,7 @@ class View
             $content->add('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />');
 
 
-        $content->add('<link rel="stylesheet" href="./css/styles.css" />');
+        $content->add('<link rel="stylesheet" href="./css/styles.css?v='.time().'" />');
         $content->add('</head>');
         $content->add('<body>');
         $content->add('<div class="container-fluid">');
@@ -146,7 +146,7 @@ class View
     public function drawThumb(ImageUrl $url, $width, $height, $type, $saved = false, $index = null)
     {
         $content = new Content();
-        $content->Add('<div class="thumb-cell col-md-2 col-sm-3 col-xs-6 "><a class="popup-trigger" data-gallery="gallery" data-index="' . $index . '" data-ext="' . $url->ext . '" data-type="' . $type . '" data-height="' . $height . '" data-width="' . $width . '"  data-img="' . $url->build() . '"><div class="well well-sm">'
+        $content->Add('<div class="thumb-cell col-md-2 col-sm-3 col-xs-12 "><a class="popup-trigger" data-gallery="gallery" data-index="' . $index . '" data-ext="' . $url->ext . '" data-type="' . $type . '" data-height="' . $height . '" data-width="' . $width . '"  data-img="' . $url->build() . '"><div class="well well-sm">'
                 . '<div style="background-image: url(' . $url->build('thumb') . ')">');
 
 
@@ -182,7 +182,7 @@ class View
             $icon = 'fa-star-o';
         }
         $out = '<div class="btn-group pull-right" role="group">';
-        $out .= '<a class="btn btn-default " href="save.php?t=' . $threadID . '&b=' . $board . '"><i class="text-warning fa ' . $icon . '"></i> </a>';
+        $out .= '<a class="btn btn-default btn-sm " href="save.php?t=' . $threadID . '&b=' . $board . '"><i class="text-warning fa ' . $icon . '"></i> </a>';
 
         if ($saved) {
             $out .= '<a class="btn btn-default" href="load.php?t=' . $threadID . '">Show Saved</a>';
