@@ -1,6 +1,8 @@
 <?php
 namespace PHPChan;
 
+use SQLite3;
+
 class DB
 {
     private $_db;

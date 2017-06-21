@@ -11,8 +11,8 @@ $board = $_GET['b'];
 
 $url = 'http://a.4cdn.org/'.$board.'/thread/'.$thread.'.json';
 
-$controller = new Controller();
-$view = new View();
+$controller = new \PHPChan\Controller();
+$view = new \PHPChan\View($controller);
 
 echo $view->header();
 
@@ -28,8 +28,8 @@ if ($thread === null) {
 
 $count = 0;
 
-$gif = new Content();
-$webm = new Content();
+$gif = new \PHPChan\Content();
+$webm = new \PHPChan\Content();
 
 $boards = $cache->get('boards');
 
@@ -62,11 +62,12 @@ foreach ($thread->posts as $post) {
     $curl = new Curl\Curl();
     $curl2 = new Curl\Curl();
 
-    $image = new ImageSource\ImageSource($post->tim, $board, $post->ext);
-    $thumb = new ImageSource\ThumbnailSource($post->tim, $board);
+    $image = new \PHPChan\ImageSource\ImageSource($controller);
+    $thumb = new \PHPChan\ImageSource\ThumbnailSource($controller);
+    $image->get($board,$post->tim,$post->ext, $curl);
+    $thumb->get($board, $post->tim, $post->ext, $curl2);
 
-    $curl->get($image->getURL());
-    $curl2->get($thumb->getURL());
+
 
     $curl->response_headers = parseResponseHeaders($curl->response_headers);
     $curl2->response_headers = parseResponseHeaders($curl2->response_headers);
@@ -79,7 +80,7 @@ foreach ($thread->posts as $post) {
     }
 
     if ($post->filename) {
-      $img = new ImageUrl($post->tim, $threadID, $board);
+      $img = new \PHPChan\ImageUrl($post->tim, $threadID, $board);
       $img->filename = $name;
 
         if ($post->ext != '.webm') {
@@ -91,7 +92,7 @@ foreach ($thread->posts as $post) {
 }
 $zip->close();
 
-$DB = new DB();
+$DB = new \PHPChan\DB();
 $DB->insert('threads', array('ID'=>$threadID, 'board'=>$board));
 
 

@@ -15,7 +15,14 @@ class ThumbnailSource
         $this->controller = $controller;
     }
 
-    public function get($board, $tim, $ext)
+    /**
+     * @param $board
+     * @param $tim
+     * @param $ext
+     * @param Curl|null $curl
+     * @return bool|string
+     */
+    public function get($board, $tim, $ext, Curl& $curl = null)
     {
         $curl = new Curl();
 
