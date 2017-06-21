@@ -22,7 +22,8 @@ $thread = $cache->get($_GET['t']);
 $tmp = $thread;
 
 if ($thread === null) {
-    $thread = json_decode($controller->get($url));
+
+    $thread = json_decode($controller->get($controller->strReplace($controller->getEndpoint('posts'), ['board'=>$board,'thread'=>$threadID])));
     $cache->set($_GET['t'], $thread, 600);
 }
 
@@ -58,6 +59,7 @@ if (!is_writable('./saved'))
 
 $zip = new ZipArchive();
 $res = $zip->open('./saved/'.$threadID.'.zip', ZipArchive::CREATE);
+$postModel = new \PHPChan\Posts\PostsModel($controller);
 foreach ($thread->posts as $post) {
     $curl = new Curl\Curl();
     $curl2 = new Curl\Curl();
@@ -74,16 +76,20 @@ foreach ($thread->posts as $post) {
 
     if ($res === true) {
         if ($zip->locateName($post->tim.$post->ext) === false && strlen(trim($post->ext)) > 0) {
-            $zip->addFromString($post->tim.$post->ext, $curl->response);
-            $zip->addFromString('thumbs/'.$post->tim.'.jpg', $curl2->response);
+            if (in_array($post->ext, \PHPChan\Controller::extensions)) {
+                $zip->addFromString($post->tim . $post->ext, $curl->response);
+                $zip->addFromString('thumbs/' . $post->tim . $post->ext, $curl2->response);
+            }
         }
     }
 
     if ($post->filename) {
       $img = new \PHPChan\ImageUrl($post->tim, $threadID, $board);
       $img->filename = $name;
+      $img->ext = preg_replace('/\./','', $post->ext);
 
         if ($post->ext != '.webm') {
+
             $gif->Add($view->drawThumb($img, $post->w, $post->h, 'image'));
         } else {
             $webm->Add($view->drawThumb($img, $post->w, $post->h, 'video'));
@@ -103,5 +109,5 @@ echo '<h3>Other</h3>';
 
 echo '<div>'.$gif;
 echo '</div>';
-echo $view->modal();
+echo $view->blankModal();
 echo $view->footer();

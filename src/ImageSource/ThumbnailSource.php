@@ -29,10 +29,8 @@ class ThumbnailSource
         $endpoints = $this->controller->getEndpoint('thumbs');
 
         foreach ($endpoints as $endpoint) {
-            $endpoint = str_replace('[board]', $board, $endpoint);
-            $endpoint = str_replace('[tim]', $tim, $endpoint);
-            $endpoint = str_replace('[ext]', $ext, $endpoint);
 
+            $endpoint = $this->controller->strReplace($endpoint, ['board'=>$board,'tim'=>$tim, 'ext'=>$ext]);
             $curl->get($endpoint);
             if ($curl->http_status_code == 200) {
                 return file_get_contents($endpoint);

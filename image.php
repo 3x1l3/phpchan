@@ -25,8 +25,11 @@ if (isset($board) && isset($tim)) {
         $data = $cache->get($hash);
         if ($data === null || $data === false || $controller->nocache()) {
             $data = $thumb->get($board, $tim, $ext);
+
             $cache->set($hash, $data, 3600 * 24);
         }
+
+
 
     } else {
         $image = new ImageSource($controller);

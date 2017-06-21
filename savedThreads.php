@@ -7,8 +7,8 @@ $thread = $_GET['t'];
 $threadID = $_GET['t'];
 $board = $_GET['b'];
 
-$controller = new Controller();
-$view = new View($controller);
+$controller = new \PHPChan\Controller();
+$view = new \PHPChan\View($controller);
 
 echo $view->header('loaded');
 
@@ -23,12 +23,12 @@ foreach ($files as $file) {
         if ($ext == 'zip') {
             $threadID = $chunks[0];
 
-            $zip = new Zip($threadID);
+            $zip = new \PHPChan\Zip($threadID);
 
             $name = $zip->getNameAtIndex(0);
 
 
-            $img = new ImageUrl(null, $threadID);
+            $img = new \PHPChan\ImageUrl(null, $threadID);
             $img->filename = $name;
 
             echo '

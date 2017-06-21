@@ -33,6 +33,8 @@ class Controller
         ]
     ];
 
+    CONST extensions = ['.gif','.jpg','.png','.webm'];
+
     public function __construct()
     {
         $this->board = $_GET['b'];
@@ -80,6 +82,20 @@ class Controller
         if (isset($this->endpoints[$key])) {
             return $this->endpoints[$key];
         }
+    }
+
+    /**
+     * Systematic way of replacements. It wraps the needs in [] so dont put them
+     * in the keys.
+     *
+     * @param $subject
+     * @param $arr [ 'needle'=>'Replacement' ]
+     */
+    public function strReplace($subject, $arr) {
+        foreach ($arr as $key => $val) {
+            $subject = str_replace('['.$key.']', $val, $subject);
+        }
+        return $subject;
     }
 
     /**

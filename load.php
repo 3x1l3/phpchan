@@ -2,12 +2,16 @@
 
 require_once 'config.php';
 use Curl\Curl;
+use PHPChan\Content;
+use PHPChan\DB;
+use PHPChan\ImageUrl;
+use PHPChan\Zip;
 
 $thread = $_GET['t'];
 $threadID = $_GET['t'];
 
-$controller = new Controller();
-$view = new View($controller);
+$controller = new \PHPChan\Controller();
+$view = new \PHPChan\View($controller);
 
 echo $view->header('loaded');
 
@@ -25,6 +29,7 @@ if (!empty($var)) {
 
   $url  ='thread.php?t='.$var[0]['ID'].'&b='.$var[0]['board'];
   $url2 = 'http://a.4cdn.org/'.$var[0]['board'].'/thread/'.$var[0]['ID'].'.json';
+  $url2 = $controller->strReplace($controller->getEndpoint('posts'), ['board'=>$var[0]['board'], 'thread'=>$var[0]['ID']]);
     $curl = new Curl();
     $curl->get($url2);
   if ($curl->http_status_code == 200) {
@@ -48,7 +53,11 @@ if ($zip->hasResource()) {
         $name = $zip->getNameAtIndex($i);
         $file = $zip->getFileAtIndex($i);
 
+        if (!$file)
+            continue;
+
         $res = imagecreatefromstring($file);
+
         $width = imagesx($res);
         $height = imagesy($res);
 
